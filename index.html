@@ -432,7 +432,7 @@ h2{ margin-top:20px; font-weight:600; }
       <div style="margin-top:10px;">🖤 Chcę, żeby ten wieczór był spokojny, ciepły i nasz — bez pośpiechu.</div>
       <div style="margin-top:10px;">✨ A reszta? Zrobi się sama, kiedy będziemy obok.</div>
 
-      <div class="smallNote">PS. Jeśli masz ochotę — odpisz mi w SMS, jaką godzinę wybierasz i czy “winko” jest na tak 😄🍷</div>
+      <div class="smallNote">PS. Jeśli masz ochotę — odpisz mi w SMS, czy “winko” jest na tak 😄🍷</div>
     </div>
 
     <div class="btnRow" style="margin-top:14px;">
@@ -470,7 +470,7 @@ const smsBtn = document.getElementById("smsBtn");
 const smsBtn2 = document.getElementById("smsBtn2");
 
 const SMS_NUMBER = "731132304";
-const SMS_TEXT = "TAK 💛\nWalentynki 14.02.2026 — jestem na TAK.\nGodzina: ____\nWinko: (tak/nie) 🍷";
+const SMS_TEXT = "TAK 💛\nWalentynki 14.02.2026 — jestem na TAK.\nWinko: (tak/nie) 🍷";
 
 function openSMS(){
   const msg = encodeURIComponent(SMS_TEXT);
@@ -575,7 +575,6 @@ function startHearts(){
 
 /* ✅ POPRAWIONE przejście między scenami (resetuje .out i klikalność) */
 function transition(fromEl, toEl){
-  // reset docelowej sceny zanim ją pokażemy
   toEl.classList.remove("out");
   toEl.classList.add("in");
   toEl.classList.remove("show");
@@ -583,17 +582,14 @@ function transition(fromEl, toEl){
   dim.classList.add("on");
   setTimeout(() => dim.classList.remove("on"), 260);
 
-  // wygaszamy aktualną
   fromEl.classList.add("out");
   fromEl.classList.remove("show");
 
   setTimeout(() => {
     fromEl.style.display = "none";
-    // WAŻNE: zdejmujemy .out, żeby po powrocie znowu była klikalna
     fromEl.classList.remove("out");
 
     toEl.style.display = "block";
-    // wymuszenie klatki renderu -> płynne wejście
     requestAnimationFrame(() => {
       toEl.classList.add("show");
     });
@@ -602,7 +598,6 @@ function transition(fromEl, toEl){
 
 /* AKT 1 -> AKT 2 */
 function goToFinalSmooth(){
-  // reset final na wejściu
   final.classList.remove("out");
   final.classList.add("in");
   final.classList.remove("show");
@@ -614,7 +609,7 @@ function goToFinalSmooth(){
 
   setTimeout(() => {
     intro.style.display = "none";
-    intro.classList.remove("out"); // reset, gdybyś kiedyś chciał wracać
+    intro.classList.remove("out");
 
     final.style.display = "block";
     requestAnimationFrame(() => final.classList.add("show"));
