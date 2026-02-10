@@ -547,7 +547,7 @@ function dodgeNo(){
   maybeEnablePulse();
 }
 
-/* NIE ucieka na hover i na dotyk */
+/* NIE ucieka */
 noBtn.addEventListener("mouseover", dodgeNo);
 noBtn.addEventListener("touchstart", (e) => {
   e.preventDefault();
@@ -573,22 +573,40 @@ function startHearts(){
   setInterval(spawnHeart, 280);
 }
 
-/* helper: przejście między scenami */
+/* ✅ POPRAWIONE przejście między scenami (resetuje .out i klikalność) */
 function transition(fromEl, toEl){
+  // reset docelowej sceny zanim ją pokażemy
+  toEl.classList.remove("out");
+  toEl.classList.add("in");
+  toEl.classList.remove("show");
+
   dim.classList.add("on");
   setTimeout(() => dim.classList.remove("on"), 260);
 
+  // wygaszamy aktualną
   fromEl.classList.add("out");
+  fromEl.classList.remove("show");
 
   setTimeout(() => {
     fromEl.style.display = "none";
+    // WAŻNE: zdejmujemy .out, żeby po powrocie znowu była klikalna
+    fromEl.classList.remove("out");
+
     toEl.style.display = "block";
-    requestAnimationFrame(() => toEl.classList.add("show"));
+    // wymuszenie klatki renderu -> płynne wejście
+    requestAnimationFrame(() => {
+      toEl.classList.add("show");
+    });
   }, 520);
 }
 
 /* AKT 1 -> AKT 2 */
 function goToFinalSmooth(){
+  // reset final na wejściu
+  final.classList.remove("out");
+  final.classList.add("in");
+  final.classList.remove("show");
+
   dim.classList.add("on");
   setTimeout(() => dim.classList.remove("on"), 260);
 
@@ -596,6 +614,8 @@ function goToFinalSmooth(){
 
   setTimeout(() => {
     intro.style.display = "none";
+    intro.classList.remove("out"); // reset, gdybyś kiedyś chciał wracać
+
     final.style.display = "block";
     requestAnimationFrame(() => final.classList.add("show"));
     setTimeout(startHearts, 250);
@@ -609,7 +629,7 @@ nextActBtn.addEventListener("click", () => transition(final, final3));
 /* AKT 3 -> AKT 2 */
 backToPlan.addEventListener("click", () => transition(final3, final));
 
-/* Spotify panel toggle */
+/* Spotify panel */
 spotifyToggle.addEventListener("click", () => {
   const open = spotifyPanel.classList.toggle("open");
   spotifyToggle.setAttribute("aria-expanded", String(open));
