@@ -29,6 +29,22 @@ body{
     radial-gradient(1200px 700px at 15% 10%, rgba(212,175,55,0.12), transparent 55%),
     radial-gradient(900px 600px at 85% 20%, rgba(242,211,107,0.10), transparent 50%),
     linear-gradient(135deg, var(--bg1), var(--bg2));
+  position: relative;
+}
+
+/* PRZYCIEMNIENIE TŁA (tylko w trakcie przejścia) */
+#dim{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.0);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+  z-index: 0; /* pod kartą */
+}
+#dim.on{
+  opacity: 1;
+  background: rgba(0,0,0,0.28);
 }
 
 .card{
@@ -41,6 +57,33 @@ body{
   border: 1px solid rgba(212,175,55,0.28);
   box-shadow: 0 20px 50px rgba(0,0,0,0.55);
   backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 2; /* nad przyciemnieniem */
+}
+
+/* --- PŁYNNE PRZEJŚCIE INTRO -> FINAL --- */
+.scene{
+  transition: opacity 520ms ease, transform 520ms ease, filter 520ms ease;
+  will-change: opacity, transform, filter;
+}
+
+.scene.out{
+  opacity: 0;
+  transform: translateY(-6px);
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+.scene.in{
+  opacity: 0;
+  transform: translateY(10px);
+  filter: blur(1px);
+}
+
+.scene.in.show{
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
 }
 
 h1{
@@ -126,6 +169,7 @@ button{
   inset: 0;
   pointer-events: none;
   display: block;
+  z-index: 1; /* nad dim, pod kartą ok */
 }
 
 .spark{
@@ -147,22 +191,60 @@ button{
   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.7); }
 }
 
-#final{ display:none; }
-
-#final h2{
+/* FINAL */
+#finalTitle{
   font-size:28px;
   color: var(--gold2);
+  margin-top: 0;
 }
 
 .meta{ margin: 6px 0 14px; opacity:0.8; }
 
+/* PLAN — bardziej czytelny */
 .plan{
   margin: 12px 0 18px;
-  padding: 14px;
+  padding: 16px 16px;
   border-radius: 16px;
   background: rgba(212,175,55,0.08);
   border: 1px solid rgba(212,175,55,0.22);
-  line-height:1.65;
+  line-height: 1.7;
+}
+
+.plan .title{
+  display:block;
+  font-weight: 650;
+  color: rgba(242,211,107,0.95);
+  margin-bottom: 10px;
+}
+
+.plan ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.plan li{
+  display:flex;
+  gap: 10px;
+  align-items:flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(212,175,55,0.14);
+}
+
+.plan li:last-child{ border-bottom: none; }
+
+.plan .icon{
+  width: 26px;
+  flex: 0 0 26px;
+  text-align:center;
+  opacity: 0.95;
+}
+
+.plan .note{
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(242,211,107,0.22);
+  color: rgba(255,255,255,0.86);
 }
 
 #final img{
@@ -180,6 +262,7 @@ button{
   inset: 0;
   pointer-events: none;
   display:none;
+  z-index: 1; /* nad dim */
 }
 
 .goldHeart{
@@ -202,11 +285,14 @@ button{
 
 <body>
 
+<div id="dim"></div>
 <div id="heartsLayer"></div>
 <div id="sparksLayer"></div>
 
 <div class="card">
-  <div id="intro">
+
+  <!-- INTRO -->
+  <div id="intro" class="scene">
     <h1>Dla Agaty ✨</h1>
 
     <p class="sub">
@@ -228,22 +314,51 @@ button{
     </div>
   </div>
 
-  <div id="final">
-    <h2>Wiedziałem… 💕</h2>
+  <!-- FINAL -->
+  <div id="final" class="scene in" style="display:none;">
+    <h2 id="finalTitle">Wiedziałem… 💕</h2>
     <div class="meta">14.02.2026</div>
 
-    <!-- PODMIENIONY PLAN -->
     <div class="plan">
-      <b>Plan na nasz wieczór:</b><br>
-      Prywatna domowa sala kinowa 🎬 + wspólne robienie sushi/pizzy 🍣🍕 (w razie jakby nam nie wychodziło będziemy mieli co zjeść &lt;3)<br>
-      Potem czas na mały podarunek 🎁 i po prostu świetny czas razem przy dobrym filmie, jedzonku i jakimś winku? (do negocjacji, nie wiem czy lubisz wino) ✨<br>
-      Oczywiście Msza również jest w planie &lt;3<br><br>
-      Gwarantuję świetną atmosferę i klimat, który zapamiętamy na długo
+      <span class="title">Plan na nasz wieczór ✨</span>
+
+      <ul>
+        <li>
+          <span class="icon">🎬</span>
+          <span>Prywatna domowa sala kinowa — tylko my, kocyk i klimat 🖤✨</span>
+        </li>
+
+        <li>
+          <span class="icon">🍣🍕</span>
+          <span>
+            Wspólne robienie sushi/pizzy — a jeśli coś nie wyjdzie, to i tak będzie co zjeść 😄💛
+            <span style="white-space:nowrap;">&lt;3</span>
+          </span>
+        </li>
+
+        <li>
+          <span class="icon">🎁</span>
+          <span>
+            Czas na mały podarunek… i po prostu świetny czas razem przy dobrym filmie, jedzonku i może jakimś winku? 🍷😉
+            (do negocjacji — nie wiem, czy lubisz wino 😄)
+          </span>
+        </li>
+
+        <li>
+          <span class="icon">⛪</span>
+          <span>Oczywiście Msza też jest w planie <span style="white-space:nowrap;">&lt;3</span></span>
+        </li>
+      </ul>
+
+      <div class="note">
+        🌟 Gwarantuję świetną atmosferę i klimat, który zapamiętamy na długo.
+      </div>
     </div>
 
     <p class="sub">To jeden z tych momentów, do których chcę wracać… 💞</p>
     <img src="photo.jpg" alt="Nasze zdjęcie">
   </div>
+
 </div>
 
 <script>
@@ -253,6 +368,7 @@ const intro = document.getElementById("intro");
 const final = document.getElementById("final");
 const heartsLayer = document.getElementById("heartsLayer");
 const sparksLayer = document.getElementById("sparksLayer");
+const dim = document.getElementById("dim");
 
 // skala TAK + puls
 let yesScale = 1;
@@ -347,14 +463,36 @@ function spawnHeart(){
   h.addEventListener("animationend", ()=>h.remove());
 }
 
-yesBtn.addEventListener("click", ()=>{
-  intro.style.display = "none";
-  final.style.display = "block";
-
+function startHearts(){
   heartsLayer.style.display = "block";
   for(let i=0;i<10;i++) setTimeout(spawnHeart, i*120);
   setInterval(spawnHeart, 280);
-});
+}
+
+/* PŁYNNE PRZEJŚCIE + PRZYCIEMNIENIE */
+function goToFinalSmooth(){
+  // krótki “blink” tła
+  dim.classList.add("on");
+  setTimeout(() => dim.classList.remove("on"), 260);
+
+  // gaś intro
+  intro.classList.add("out");
+
+  // po chwili pokaż final (fade-in)
+  setTimeout(() => {
+    intro.style.display = "none";
+    final.style.display = "block";
+
+    requestAnimationFrame(() => {
+      final.classList.add("show");
+    });
+
+    // serduszka po wejściu
+    setTimeout(startHearts, 250);
+  }, 520);
+}
+
+yesBtn.addEventListener("click", goToFinalSmooth);
 
 applyYesScale();
 </script>
