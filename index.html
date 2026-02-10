@@ -40,7 +40,7 @@ body{
   opacity: 0;
   transition: opacity 220ms ease;
   pointer-events: none;
-  z-index: 0; /* pod kartą */
+  z-index: 0;
 }
 #dim.on{
   opacity: 1;
@@ -58,7 +58,7 @@ body{
   box-shadow: 0 20px 50px rgba(0,0,0,0.55);
   backdrop-filter: blur(12px);
   position: relative;
-  z-index: 2; /* nad przyciemnieniem */
+  z-index: 2;
 }
 
 /* --- PŁYNNE PRZEJŚCIE INTRO -> FINAL --- */
@@ -66,20 +66,17 @@ body{
   transition: opacity 520ms ease, transform 520ms ease, filter 520ms ease;
   will-change: opacity, transform, filter;
 }
-
 .scene.out{
   opacity: 0;
   transform: translateY(-6px);
   filter: blur(1px);
   pointer-events: none;
 }
-
 .scene.in{
   opacity: 0;
   transform: translateY(10px);
   filter: blur(1px);
 }
-
 .scene.in.show{
   opacity: 1;
   transform: translateY(0);
@@ -136,7 +133,6 @@ button{
     0 0 22px rgba(212,175,55,0.22),
     0 0 44px rgba(242,211,107,0.16);
 }
-
 @keyframes pulse{
   0%   { transform: translateX(-50%) scale(var(--s)); filter: brightness(1); }
   50%  { transform: translateX(-50%) scale(calc(var(--s) + 0.045)); filter: brightness(1.06); }
@@ -169,9 +165,8 @@ button{
   inset: 0;
   pointer-events: none;
   display: block;
-  z-index: 1; /* nad dim, pod kartą ok */
+  z-index: 1;
 }
-
 .spark{
   position: absolute;
   width: 5px;
@@ -184,7 +179,6 @@ button{
   animation: spark 520ms ease-out forwards;
   will-change: transform, opacity;
 }
-
 @keyframes spark{
   0%   { opacity: 0; transform: translate(0,0) scale(0.9); }
   15%  { opacity: 1; }
@@ -197,10 +191,9 @@ button{
   color: var(--gold2);
   margin-top: 0;
 }
-
 .meta{ margin: 6px 0 14px; opacity:0.8; }
 
-/* PLAN — bardziej czytelny */
+/* PLAN — czytelny */
 .plan{
   margin: 12px 0 18px;
   padding: 16px 16px;
@@ -209,37 +202,20 @@ button{
   border: 1px solid rgba(212,175,55,0.22);
   line-height: 1.7;
 }
-
 .plan .title{
   display:block;
   font-weight: 650;
   color: rgba(242,211,107,0.95);
   margin-bottom: 10px;
 }
-
-.plan ul{
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
+.plan ul{ list-style:none; padding:0; margin:0; }
 .plan li{
-  display:flex;
-  gap: 10px;
-  align-items:flex-start;
+  display:flex; gap:10px; align-items:flex-start;
   padding: 8px 0;
   border-bottom: 1px solid rgba(212,175,55,0.14);
 }
-
-.plan li:last-child{ border-bottom: none; }
-
-.plan .icon{
-  width: 26px;
-  flex: 0 0 26px;
-  text-align:center;
-  opacity: 0.95;
-}
-
+.plan li:last-child{ border-bottom:none; }
+.plan .icon{ width:26px; flex:0 0 26px; text-align:center; opacity:.95; }
 .plan .note{
   margin-top: 12px;
   padding-top: 10px;
@@ -256,15 +232,88 @@ button{
   box-shadow: 0 18px 40px rgba(0,0,0,0.55);
 }
 
+/* --- SPOTIFY: przycisk pod zdjęciem + panel z tekstem --- */
+.spotifyWrap{ margin-top: 14px; }
+
+.spotifyPrimaryBtn{
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid rgba(212,175,55,0.45);
+  background: linear-gradient(135deg, rgba(212,175,55,0.92), rgba(242,211,107,0.82));
+  color: #0b0b0b;
+  font-weight: 750;
+  box-shadow: 0 10px 22px rgba(212,175,55,0.16);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+.spotifyPrimaryBtn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+
+.spotifyPanel{
+  margin-top: 12px;
+  padding: 14px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(212,175,55,0.18);
+  overflow: hidden;
+
+  /* animacja rozwijania */
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: max-height 420ms ease, opacity 260ms ease, transform 260ms ease;
+}
+.spotifyPanel.open{
+  max-height: 520px; /* wystarczy na tekst */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.spotifyLine{
+  color: rgba(255,255,255,0.86);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.lyrics{
+  margin: 0 0 12px 0;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
+  color: rgba(255,255,255,0.86);
+  line-height: 1.65;
+  white-space: pre-line; /* zachowuje enterki */
+}
+
+.spotifyGo{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #0b0b0b;
+  font-weight: 750;
+  border: 1px solid rgba(212,175,55,0.45);
+  background: linear-gradient(135deg, rgba(212,175,55,0.92), rgba(242,211,107,0.82));
+  box-shadow: 0 10px 22px rgba(212,175,55,0.16);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+.spotifyGo:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+
 /* Złote serduszka */
 #heartsLayer{
   position: fixed;
   inset: 0;
   pointer-events: none;
   display:none;
-  z-index: 1; /* nad dim */
+  z-index: 1;
 }
-
 .goldHeart{
   position: absolute;
   bottom: -40px;
@@ -274,7 +323,6 @@ button{
   animation: floatUp linear forwards;
   will-change: transform, opacity;
 }
-
 @keyframes floatUp{
   0%   { transform: translateY(0) translateX(0); opacity:0; }
   10%  { opacity:0.9; }
@@ -356,146 +404,19 @@ button{
     </div>
 
     <p class="sub">To jeden z tych momentów, do których chcę wracać… 💞</p>
+
     <img src="photo.jpg" alt="Nasze zdjęcie">
-  </div>
 
-</div>
+    <!-- SPOTIFY: pod zdjęciem -->
+    <div class="spotifyWrap">
+      <button id="spotifyToggle" class="spotifyPrimaryBtn" type="button" aria-expanded="false" aria-controls="spotifyPanel">
+        🎧 Otwórz na Spotify
+      </button>
 
-<script>
-const yesBtn = document.getElementById("yes");
-const noBtn = document.getElementById("no");
-const intro = document.getElementById("intro");
-const final = document.getElementById("final");
-const heartsLayer = document.getElementById("heartsLayer");
-const sparksLayer = document.getElementById("sparksLayer");
-const dim = document.getElementById("dim");
+      <div id="spotifyPanel" class="spotifyPanel" aria-hidden="true">
+        <div class="spotifyLine">To kawałek, który chcę żeby zagrał w tle… dla nas 💛</div>
 
-// skala TAK + puls
-let yesScale = 1;
-const maxScale = 1.38;
-const pulseStartAt = 1.18;
-let cracked = false;
-
-function applyYesScale(){
-  yesBtn.style.setProperty("--s", yesScale.toFixed(3));
-  if(!yesBtn.classList.contains("pulse")){
-    yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
-  }
-}
-
-function spawnSparksAt(x, y){
-  const count = 9;
-  for(let i=0;i<count;i++){
-    const s = document.createElement("div");
-    s.className = "spark";
-
-    const dx = (Math.random()*80 - 40).toFixed(0) + "px";
-    const dy = (-20 - Math.random()*70).toFixed(0) + "px";
-    const size = (3 + Math.random()*3).toFixed(0) + "px";
-    const delay = (Math.random()*70).toFixed(0) + "ms";
-
-    s.style.left = x + "px";
-    s.style.top  = y + "px";
-    s.style.width = size;
-    s.style.height = size;
-    s.style.setProperty("--dx", dx);
-    s.style.setProperty("--dy", dy);
-    s.style.animationDelay = delay;
-
-    sparksLayer.appendChild(s);
-    s.addEventListener("animationend", () => s.remove(), { once:true });
-  }
-}
-
-function crackNo(){
-  if(cracked) return;
-  cracked = true;
-
-  const r = noBtn.getBoundingClientRect();
-  const x = r.left + r.width/2;
-  const y = r.top + r.height/2;
-
-  spawnSparksAt(x, y);
-
-  noBtn.classList.add("crack");
-  noBtn.style.pointerEvents = "none";
-  noBtn.addEventListener("animationend", () => {
-    noBtn.style.display = "none";
-  }, { once:true });
-}
-
-function maybeEnablePulse(){
-  if(yesScale >= pulseStartAt && !yesBtn.classList.contains("pulse")){
-    yesBtn.classList.add("pulse");
-    crackNo();
-  }
-}
-
-function dodgeNo(){
-  if(noBtn.style.display !== "none"){
-    const x = Math.random() * 220 - 110;
-    const y = Math.random() * 120 - 60;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-  }
-
-  yesScale = Math.min(maxScale, yesScale + 0.055);
-  applyYesScale();
-  maybeEnablePulse();
-}
-
-noBtn.addEventListener("mouseover", dodgeNo);
-noBtn.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  dodgeNo();
-}, {passive:false});
-
-// Złote serca po TAK
-function spawnHeart(){
-  const h = document.createElement("div");
-  h.className = "goldHeart";
-  h.textContent = "💛";
-  h.style.left = Math.random()*100 + "vw";
-  h.style.setProperty("--drift", (Math.random()*80 - 40).toFixed(0) + "px");
-  h.style.animationDuration = (5.2 + Math.random()*4.2).toFixed(2) + "s";
-  h.style.fontSize = (14 + Math.random()*10).toFixed(0) + "px";
-  h.style.opacity = (0.55 + Math.random()*0.35).toFixed(2);
-  heartsLayer.appendChild(h);
-  h.addEventListener("animationend", ()=>h.remove());
-}
-
-function startHearts(){
-  heartsLayer.style.display = "block";
-  for(let i=0;i<10;i++) setTimeout(spawnHeart, i*120);
-  setInterval(spawnHeart, 280);
-}
-
-/* PŁYNNE PRZEJŚCIE + PRZYCIEMNIENIE */
-function goToFinalSmooth(){
-  // krótki “blink” tła
-  dim.classList.add("on");
-  setTimeout(() => dim.classList.remove("on"), 260);
-
-  // gaś intro
-  intro.classList.add("out");
-
-  // po chwili pokaż final (fade-in)
-  setTimeout(() => {
-    intro.style.display = "none";
-    final.style.display = "block";
-
-    requestAnimationFrame(() => {
-      final.classList.add("show");
-    });
-
-    // serduszka po wejściu
-    setTimeout(startHearts, 250);
-  }, 520);
-}
-
-yesBtn.addEventListener("click", goToFinalSmooth);
-
-applyYesScale();
-</script>
-
-</body>
-</html>
+        <div class="lyrics">
+There now, steady love, so few come and don't go
+Will you, won't you, be the one I'll always know?
+When I'm losing my control, the city spins
