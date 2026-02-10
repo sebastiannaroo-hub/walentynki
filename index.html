@@ -57,10 +57,7 @@ h1{
   color: rgba(255,255,255,0.8);
 }
 
-h2{
-  margin-top:20px;
-  font-weight:500;
-}
+h2{ margin-top:20px; font-weight:500; }
 
 .buttons{
   margin-top: 26px;
@@ -74,12 +71,13 @@ button{
   border-radius: 999px;
   cursor: pointer;
   border: 1px solid rgba(212,175,55,0.45);
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease, opacity 220ms ease;
   position: absolute;
   user-select:none;
-  will-change: transform;
+  will-change: transform, box-shadow, filter, opacity;
 }
 
+/* TAK */
 #yes{
   left: 50%;
   transform: translateX(-50%) scale(1);
@@ -88,6 +86,22 @@ button{
   box-shadow: 0 10px 24px rgba(212,175,55,0.18);
 }
 
+/* Pulsowanie TAK + złota poświata */
+.pulse{
+  animation: pulse 1.05s ease-in-out infinite;
+  box-shadow:
+    0 16px 34px rgba(212,175,55,0.25),
+    0 0 22px rgba(212,175,55,0.22),
+    0 0 44px rgba(242,211,107,0.16);
+}
+
+@keyframes pulse{
+  0%   { transform: translateX(-50%) scale(var(--s)); filter: brightness(1); }
+  50%  { transform: translateX(-50%) scale(calc(var(--s) + 0.045)); filter: brightness(1.06); }
+  100% { transform: translateX(-50%) scale(var(--s)); filter: brightness(1); }
+}
+
+/* NIE */
 #no{
   right: 10px;
   background: rgba(255,255,255,0.06);
@@ -95,15 +109,43 @@ button{
   border-color: rgba(255,255,255,0.18);
 }
 
-/* Pulsowanie TAK (włącza się dopiero w JS) */
-.pulse{
-  animation: pulse 1.05s ease-in-out infinite;
+/* “Pęknięcie” i zniknięcie NIE */
+.crack{
+  animation: crack 520ms ease forwards;
+  transform-origin: center;
+}
+@keyframes crack{
+  0%   { transform: translate(0,0) rotate(0) scale(1); opacity: 1; }
+  35%  { transform: translate(-6px, 2px) rotate(-4deg) scale(1.02); }
+  55%  { transform: translate(7px, -2px) rotate(6deg) scale(0.98); }
+  100% { transform: translate(0, 30px) rotate(18deg) scale(0.65); opacity: 0; }
 }
 
-@keyframes pulse{
-  0%   { transform: translateX(-50%) scale(var(--s)); }
-  50%  { transform: translateX(-50%) scale(calc(var(--s) + 0.045)); }
-  100% { transform: translateX(-50%) scale(var(--s)); }
+/* Mikro-iskierki */
+#sparksLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  display: block;
+}
+
+.spark{
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(212,175,55,0.95);
+  box-shadow: 0 0 10px rgba(212,175,55,0.35);
+  opacity: 0;
+  transform: translate(0,0) scale(1);
+  animation: spark 520ms ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes spark{
+  0%   { opacity: 0; transform: translate(0,0) scale(0.9); }
+  15%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.7); }
 }
 
 #final{ display:none; }
@@ -113,10 +155,7 @@ button{
   color: var(--gold2);
 }
 
-.meta{
-  margin: 6px 0 14px;
-  opacity:0.8;
-}
+.meta{ margin: 6px 0 14px; opacity:0.8; }
 
 .plan{
   margin: 12px 0 18px;
@@ -165,6 +204,7 @@ button{
 <body>
 
 <div id="heartsLayer"></div>
+<div id="sparksLayer"></div>
 
 <div class="card">
   <div id="intro">
@@ -203,35 +243,77 @@ const noBtn = document.getElementById("no");
 const intro = document.getElementById("intro");
 const final = document.getElementById("final");
 const heartsLayer = document.getElementById("heartsLayer");
+const sparksLayer = document.getElementById("sparksLayer");
 
 // skala TAK + puls
 let yesScale = 1;
 const maxScale = 1.38;
-const pulseStartAt = 1.18; // kiedy ma zacząć pulsować
+const pulseStartAt = 1.18;
+let cracked = false;
 
 function applyYesScale(){
-  // do animacji pulse używamy CSS variable
   yesBtn.style.setProperty("--s", yesScale.toFixed(3));
-  // gdy nie pulsuje, ustawiamy transform ręcznie
   if(!yesBtn.classList.contains("pulse")){
     yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
   }
 }
 
+function spawnSparksAt(x, y){
+  const count = 9; // mikro-iskierki
+  for(let i=0;i<count;i++){
+    const s = document.createElement("div");
+    s.className = "spark";
+
+    const dx = (Math.random()*80 - 40).toFixed(0) + "px";
+    const dy = (-20 - Math.random()*70).toFixed(0) + "px"; // trochę do góry
+    const size = (3 + Math.random()*3).toFixed(0) + "px";
+    const delay = (Math.random()*70).toFixed(0) + "ms";
+
+    s.style.left = x + "px";
+    s.style.top  = y + "px";
+    s.style.width = size;
+    s.style.height = size;
+    s.style.setProperty("--dx", dx);
+    s.style.setProperty("--dy", dy);
+    s.style.animationDelay = delay;
+
+    sparksLayer.appendChild(s);
+    s.addEventListener("animationend", () => s.remove(), { once:true });
+  }
+}
+
+function crackNo(){
+  if(cracked) return;
+  cracked = true;
+
+  // pozycja NIE na ekranie (środek przycisku) -> tam spawnujemy iskry
+  const r = noBtn.getBoundingClientRect();
+  const x = r.left + r.width/2;
+  const y = r.top + r.height/2;
+
+  spawnSparksAt(x, y);
+
+  noBtn.classList.add("crack");
+  noBtn.style.pointerEvents = "none";
+  noBtn.addEventListener("animationend", () => {
+    noBtn.style.display = "none";
+  }, { once:true });
+}
+
 function maybeEnablePulse(){
   if(yesScale >= pulseStartAt && !yesBtn.classList.contains("pulse")){
-    // przełączamy na pulsowanie (zachowując aktualną skalę w CSS var)
     yesBtn.classList.add("pulse");
+    crackNo();
   }
 }
 
 function dodgeNo(){
-  // uciekające NIE
-  const x = Math.random() * 220 - 110;
-  const y = Math.random() * 120 - 60;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  if(noBtn.style.display !== "none"){
+    const x = Math.random() * 220 - 110;
+    const y = Math.random() * 120 - 60;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  }
 
-  // rosnące TAK
   yesScale = Math.min(maxScale, yesScale + 0.055);
   applyYesScale();
   maybeEnablePulse();
@@ -239,7 +321,6 @@ function dodgeNo(){
 
 noBtn.addEventListener("mouseover", dodgeNo);
 noBtn.addEventListener("touchstart", (e) => {
-  // na telefonie: niech NIE też “ucieka” przy dotknięciu
   e.preventDefault();
   dodgeNo();
 }, {passive:false});
@@ -258,18 +339,15 @@ function spawnHeart(){
   h.addEventListener("animationend", ()=>h.remove());
 }
 
-let heartsInterval = null;
-
 yesBtn.addEventListener("click", ()=>{
   intro.style.display = "none";
   final.style.display = "block";
 
   heartsLayer.style.display = "block";
   for(let i=0;i<10;i++) setTimeout(spawnHeart, i*120);
-  heartsInterval = setInterval(spawnHeart, 280);
+  setInterval(spawnHeart, 280);
 });
 
-// ustaw startową skalę (na wypadek cache / przerysowań)
 applyYesScale();
 </script>
 
