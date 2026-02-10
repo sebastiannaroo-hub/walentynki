@@ -209,12 +209,14 @@ button{
 <div class="card">
   <div id="intro">
     <h1>Dla Agaty ✨</h1>
+
+    <!-- PODMIENIONY TEKST -->
     <p class="sub">
-      Od kiedy jesteś w moim życiu, wszystko stało się jakieś… jaśniejsze.<br>
-      Jest coś, o co chcę Cię zapytać…
+      Nie wyobrażam sobie, że ktoś inny mógłby zająć Twoje miejsce...<br>
+      Dlatego jest coś o co chciałbym Cię zapytać...
     </p>
 
-    <h2>Czy zostaniesz moją Walentynką? 💘</h2>
+    <h2>Skarbie czy zostaniesz moją walentynką? 💘</h2>
 
     <div class="buttons">
       <button id="yes">TAK 💛</button>
@@ -259,13 +261,13 @@ function applyYesScale(){
 }
 
 function spawnSparksAt(x, y){
-  const count = 9; // mikro-iskierki
+  const count = 9;
   for(let i=0;i<count;i++){
     const s = document.createElement("div");
     s.className = "spark";
 
     const dx = (Math.random()*80 - 40).toFixed(0) + "px";
-    const dy = (-20 - Math.random()*70).toFixed(0) + "px"; // trochę do góry
+    const dy = (-20 - Math.random()*70).toFixed(0) + "px";
     const size = (3 + Math.random()*3).toFixed(0) + "px";
     const delay = (Math.random()*70).toFixed(0) + "ms";
 
@@ -286,7 +288,6 @@ function crackNo(){
   if(cracked) return;
   cracked = true;
 
-  // pozycja NIE na ekranie (środek przycisku) -> tam spawnujemy iskry
   const r = noBtn.getBoundingClientRect();
   const x = r.left + r.width/2;
   const y = r.top + r.height/2;
