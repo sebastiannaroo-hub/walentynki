@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Walentynki 💖</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      background: rgba(0,0,0,0.2);
+      padding: 40px;
+      border-radius: 20px;
+    }
+    button {
+      font-size: 18px;
+      padding: 10px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .yes {
+      background: #2ecc71;
+      color: white;
+    }
+    .no {
+      background: #e74c3c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Czy zostaniesz moją Walentynką? 💘</h1>
+    <button class="yes" onclick="answer('TAK')">TAK 💖</button>
+    <button class="no" onclick="answer('NIE')">NIE 🙈</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function answer(choice) {
+      if (choice === 'TAK') {
+        document.getElementById('result').innerHTML =
+          "YEES! 💕 Nie mogę się doczekać 😍";
+      } else {
+        document.getElementById('result').innerHTML =
+          "Okej… ale i tak jesteś wyjątkowa 💐";
+      }
+    }
+  </script>
+</body>
+</html>
