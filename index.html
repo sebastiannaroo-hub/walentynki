@@ -282,7 +282,7 @@ h2{ margin-top:20px; font-weight:600; }
   transition: max-height 420ms ease, opacity 260ms ease, transform 260ms ease;
 }
 .spotifyPanel.open{
-  max-height: 520px;
+  max-height: 1200px; /* miejsce na video */
   opacity: 1;
   transform: translateY(0);
 }
@@ -291,6 +291,17 @@ h2{ margin-top:20px; font-weight:600; }
   color: rgba(255,255,255,0.86);
   line-height: 1.6;
   margin-bottom: 10px;
+}
+
+/* WIDEO */
+.loveVideo{
+  width: 100%;
+  margin: 10px 0 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(212,175,55,0.18);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+  background: rgba(0,0,0,0.25);
+  display: block;
 }
 
 .lyrics{
@@ -378,6 +389,13 @@ h2{ margin-top:20px; font-weight:600; }
       <div id="spotifyPanel" class="spotifyPanel" aria-hidden="true">
         <div class="spotifyLine">Ten kawałek ma lecieć w tle… dla nas 💛</div>
 
+        <video class="loveVideo" controls playsinline preload="metadata" poster="photo.jpg">
+          <source src="video.mp4" type="video/mp4">
+          Twoja przeglądarka nie obsługuje wideo.
+        </video>
+
+        <!-- Uwaga: pełnych tekstów piosenek nie wstawiamy (prawa autorskie).
+             Zostawiamy krótką linijkę + link do Spotify -->
         <div class="lyrics">There now, steady love, so few come and don't go</div>
 
         <a class="spotifyGo" href="https://open.spotify.com/track/5l6hpyTGBK0LAAxgPnqTQL" target="_blank" rel="noopener noreferrer">
@@ -472,7 +490,7 @@ noBtn.addEventListener("mouseover", dodgeNo);
 noBtn.addEventListener("touchstart", (e) => {
   e.preventDefault();
   dodgeNo();
-}, {passive:false});
+}, {passive:false });
 
 // serduszka po TAK
 function spawnHeart(){
