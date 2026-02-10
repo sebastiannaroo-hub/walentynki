@@ -32,15 +32,15 @@ body{
   position: relative;
 }
 
-/* PRZYCIEMNIENIE TŁA (tylko w trakcie przejścia) */
+/* Krótkie przyciemnienie tła */
 #dim{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.0);
   opacity: 0;
   transition: opacity 220ms ease;
   pointer-events: none;
   z-index: 0;
+  background: rgba(0,0,0,0.0);
 }
 #dim.on{
   opacity: 1;
@@ -61,7 +61,7 @@ body{
   z-index: 2;
 }
 
-/* --- PŁYNNE PRZEJŚCIE INTRO -> FINAL --- */
+/* płynne przejście intro -> final */
 .scene{
   transition: opacity 520ms ease, transform 520ms ease, filter 520ms ease;
   will-change: opacity, transform, filter;
@@ -85,47 +85,45 @@ body{
 
 h1{
   margin: 0 0 10px 0;
-  font-weight: 500;
+  font-weight: 550;
   font-size: 34px;
   color: var(--gold2);
 }
-
 .sub{
   font-size:18px;
   line-height:1.7;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.82);
 }
-
-h2{ margin-top:20px; font-weight:500; }
+h2{ margin-top:20px; font-weight:600; }
 
 .buttons{
   margin-top: 26px;
-  position: relative;
-  height: 70px;
+  display:flex;
+  justify-content:center;
+  gap: 18px;
+  flex-wrap: wrap;
 }
 
-button{
+/* przyciski */
+.btn{
   font-size: 18px;
-  padding: 12px 26px;
+  padding: 12px 28px;
   border-radius: 999px;
   cursor: pointer;
   border: 1px solid rgba(212,175,55,0.45);
   transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease, opacity 220ms ease;
-  position: absolute;
   user-select:none;
   will-change: transform, box-shadow, filter, opacity;
 }
 
-/* TAK */
 #yes{
-  left: 50%;
-  transform: translateX(-50%) scale(1);
   background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(242,211,107,0.85));
   color: #0b0b0b;
   box-shadow: 0 10px 24px rgba(212,175,55,0.18);
+  transform: scale(1);
 }
 
-/* Pulsowanie TAK + złota poświata */
+/* puls TAK */
 .pulse{
   animation: pulse 1.05s ease-in-out infinite;
   box-shadow:
@@ -134,20 +132,19 @@ button{
     0 0 44px rgba(242,211,107,0.16);
 }
 @keyframes pulse{
-  0%   { transform: translateX(-50%) scale(var(--s)); filter: brightness(1); }
-  50%  { transform: translateX(-50%) scale(calc(var(--s) + 0.045)); filter: brightness(1.06); }
-  100% { transform: translateX(-50%) scale(var(--s)); filter: brightness(1); }
+  0%   { transform: scale(var(--s)); filter: brightness(1); }
+  50%  { transform: scale(calc(var(--s) + 0.045)); filter: brightness(1.06); }
+  100% { transform: scale(var(--s)); filter: brightness(1); }
 }
 
-/* NIE */
 #no{
-  right: 10px;
   background: rgba(255,255,255,0.06);
-  color: var(--text);
+  color: rgba(255,255,255,0.92);
   border-color: rgba(255,255,255,0.18);
+  position: relative;
 }
 
-/* “Pęknięcie” i zniknięcie NIE */
+/* pęknięcie NIE */
 .crack{
   animation: crack 520ms ease forwards;
   transform-origin: center;
@@ -159,12 +156,11 @@ button{
   100% { transform: translate(0, 30px) rotate(18deg) scale(0.65); opacity: 0; }
 }
 
-/* Mikro-iskierki */
+/* iskierki */
 #sparksLayer{
   position: fixed;
   inset: 0;
   pointer-events: none;
-  display: block;
   z-index: 1;
 }
 .spark{
@@ -175,9 +171,7 @@ button{
   background: rgba(212,175,55,0.95);
   box-shadow: 0 0 10px rgba(212,175,55,0.35);
   opacity: 0;
-  transform: translate(0,0) scale(1);
   animation: spark 520ms ease-out forwards;
-  will-change: transform, opacity;
 }
 @keyframes spark{
   0%   { opacity: 0; transform: translate(0,0) scale(0.9); }
@@ -185,7 +179,7 @@ button{
   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.7); }
 }
 
-/* FINAL */
+/* final */
 #finalTitle{
   font-size:28px;
   color: var(--gold2);
@@ -193,7 +187,7 @@ button{
 }
 .meta{ margin: 6px 0 14px; opacity:0.8; }
 
-/* PLAN — czytelny */
+/* plan */
 .plan{
   margin: 12px 0 18px;
   padding: 16px 16px;
@@ -204,7 +198,7 @@ button{
 }
 .plan .title{
   display:block;
-  font-weight: 650;
+  font-weight: 750;
   color: rgba(242,211,107,0.95);
   margin-bottom: 10px;
 }
@@ -232,9 +226,30 @@ button{
   box-shadow: 0 18px 40px rgba(0,0,0,0.55);
 }
 
-/* --- SPOTIFY: przycisk pod zdjęciem + panel z tekstem --- */
-.spotifyWrap{ margin-top: 14px; }
+/* serduszka */
+#heartsLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  display:none;
+  z-index: 1;
+}
+.goldHeart{
+  position: absolute;
+  bottom: -40px;
+  font-size: 18px;
+  color: rgba(212,175,55,0.85);
+  text-shadow: 0 0 14px rgba(212,175,55,0.22);
+  animation: floatUp linear forwards;
+}
+@keyframes floatUp{
+  0%   { transform: translateY(0) translateX(0); opacity:0; }
+  10%  { opacity:0.9; }
+  100% { transform: translateY(-110vh) translateX(var(--drift)); opacity:0; }
+}
 
+/* SPOTIFY pod zdjęciem */
+.spotifyWrap{ margin-top: 14px; }
 .spotifyPrimaryBtn{
   width: 100%;
   display: inline-flex;
@@ -247,7 +262,7 @@ button{
   border: 1px solid rgba(212,175,55,0.45);
   background: linear-gradient(135deg, rgba(212,175,55,0.92), rgba(242,211,107,0.82));
   color: #0b0b0b;
-  font-weight: 750;
+  font-weight: 800;
   box-shadow: 0 10px 22px rgba(212,175,55,0.16);
   transition: transform 180ms ease, filter 180ms ease;
 }
@@ -261,14 +276,13 @@ button{
   border: 1px solid rgba(212,175,55,0.18);
   overflow: hidden;
 
-  /* animacja rozwijania */
   max-height: 0;
   opacity: 0;
   transform: translateY(-4px);
   transition: max-height 420ms ease, opacity 260ms ease, transform 260ms ease;
 }
 .spotifyPanel.open{
-  max-height: 520px; /* wystarczy na tekst */
+  max-height: 520px;
   opacity: 1;
   transform: translateY(0);
 }
@@ -287,7 +301,7 @@ button{
   border: 1px solid rgba(212,175,55,0.18);
   color: rgba(255,255,255,0.86);
   line-height: 1.65;
-  white-space: pre-line; /* zachowuje enterki */
+  white-space: pre-line;
 }
 
 .spotifyGo{
@@ -298,48 +312,23 @@ button{
   border-radius: 999px;
   text-decoration: none;
   color: #0b0b0b;
-  font-weight: 750;
+  font-weight: 800;
   border: 1px solid rgba(212,175,55,0.45);
   background: linear-gradient(135deg, rgba(212,175,55,0.92), rgba(242,211,107,0.82));
   box-shadow: 0 10px 22px rgba(212,175,55,0.16);
   transition: transform 180ms ease, filter 180ms ease;
 }
 .spotifyGo:hover{ transform: translateY(-1px); filter: brightness(1.05); }
-
-/* Złote serduszka */
-#heartsLayer{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  display:none;
-  z-index: 1;
-}
-.goldHeart{
-  position: absolute;
-  bottom: -40px;
-  font-size: 18px;
-  color: rgba(212,175,55,0.85);
-  text-shadow: 0 0 14px rgba(212,175,55,0.22);
-  animation: floatUp linear forwards;
-  will-change: transform, opacity;
-}
-@keyframes floatUp{
-  0%   { transform: translateY(0) translateX(0); opacity:0; }
-  10%  { opacity:0.9; }
-  100% { transform: translateY(-110vh) translateX(var(--drift)); opacity:0; }
-}
 </style>
 </head>
 
 <body>
-
 <div id="dim"></div>
 <div id="heartsLayer"></div>
 <div id="sparksLayer"></div>
 
 <div class="card">
 
-  <!-- INTRO -->
   <div id="intro" class="scene">
     <h1>Dla Agaty ✨</h1>
 
@@ -357,66 +346,176 @@ button{
     <h2>Czy <span style="color: rgba(242,211,107,0.95);">Agol</span> zostanie Moją Walentynką? 💘</h2>
 
     <div class="buttons">
-      <button id="yes">TAK 💛</button>
-      <button id="no">NIE 🙈</button>
+      <button id="yes" class="btn" type="button">TAK 💛</button>
+      <button id="no" class="btn" type="button">NIE 🙈</button>
     </div>
   </div>
 
-  <!-- FINAL -->
   <div id="final" class="scene in" style="display:none;">
     <h2 id="finalTitle">Wiedziałem… 💕</h2>
     <div class="meta">14.02.2026</div>
 
     <div class="plan">
       <span class="title">Plan na nasz wieczór ✨</span>
-
       <ul>
-        <li>
-          <span class="icon">🎬</span>
-          <span>Prywatna domowa sala kinowa — tylko my, kocyk i klimat 🖤✨</span>
-        </li>
-
-        <li>
-          <span class="icon">🍣🍕</span>
-          <span>
-            Wspólne robienie sushi/pizzy — a jeśli coś nie wyjdzie, to i tak będzie co zjeść 😄💛
-            <span style="white-space:nowrap;">&lt;3</span>
-          </span>
-        </li>
-
-        <li>
-          <span class="icon">🎁</span>
-          <span>
-            Czas na mały podarunek… i po prostu świetny czas razem przy dobrym filmie, jedzonku i może jakimś winku? 🍷😉
-            (do negocjacji — nie wiem, czy lubisz wino 😄)
-          </span>
-        </li>
-
-        <li>
-          <span class="icon">⛪</span>
-          <span>Oczywiście Msza też jest w planie <span style="white-space:nowrap;">&lt;3</span></span>
-        </li>
+        <li><span class="icon">🎬</span><span>Prywatna domowa sala kinowa — tylko my, kocyk i klimat 🖤✨</span></li>
+        <li><span class="icon">🍣🍕</span><span>Wspólne robienie sushi/pizzy — a jeśli coś nie wyjdzie, to i tak będzie co zjeść 😄💛 <span style="white-space:nowrap;">&lt;3</span></span></li>
+        <li><span class="icon">🎁</span><span>Czas na mały podarunek… i świetny czas razem przy dobrym filmie, jedzonku i może winku? 🍷😉 (do negocjacji 😄)</span></li>
+        <li><span class="icon">⛪</span><span>Oczywiście Msza też jest w planie <span style="white-space:nowrap;">&lt;3</span></span></li>
       </ul>
-
-      <div class="note">
-        🌟 Gwarantuję świetną atmosferę i klimat, który zapamiętamy na długo.
-      </div>
+      <div class="note">🌟 Gwarantuję atmosferę i klimat, który zapamiętamy na długo.</div>
     </div>
 
     <p class="sub">To jeden z tych momentów, do których chcę wracać… 💞</p>
 
     <img src="photo.jpg" alt="Nasze zdjęcie">
 
-    <!-- SPOTIFY: pod zdjęciem -->
     <div class="spotifyWrap">
       <button id="spotifyToggle" class="spotifyPrimaryBtn" type="button" aria-expanded="false" aria-controls="spotifyPanel">
         🎧 Otwórz na Spotify
       </button>
 
       <div id="spotifyPanel" class="spotifyPanel" aria-hidden="true">
-        <div class="spotifyLine">To kawałek, który chcę żeby zagrał w tle… dla nas 💛</div>
+        <div class="spotifyLine">Ten kawałek ma lecieć w tle… dla nas 💛</div>
 
-        <div class="lyrics">
-There now, steady love, so few come and don't go
-Will you, won't you, be the one I'll always know?
-When I'm losing my control, the city spins
+        <div class="lyrics">There now, steady love, so few come and don't go</div>
+
+        <a class="spotifyGo" href="https://open.spotify.com/track/5l6hpyTGBK0LAAxgPnqTQL" target="_blank" rel="noopener noreferrer">
+          Przejdź do Spotify ✨
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const intro = document.getElementById("intro");
+const final = document.getElementById("final");
+const heartsLayer = document.getElementById("heartsLayer");
+const sparksLayer = document.getElementById("sparksLayer");
+const dim = document.getElementById("dim");
+
+const spotifyToggle = document.getElementById("spotifyToggle");
+const spotifyPanel = document.getElementById("spotifyPanel");
+
+// rosnące TAK + pulsowanie
+let yesScale = 1;
+const maxScale = 1.38;
+const pulseStartAt = 1.18;
+let cracked = false;
+
+function applyYesScale(){
+  yesBtn.style.setProperty("--s", yesScale.toFixed(3));
+  if(!yesBtn.classList.contains("pulse")){
+    yesBtn.style.transform = `scale(${yesScale})`;
+  }
+}
+applyYesScale();
+
+function spawnSparksAt(x, y){
+  const count = 9;
+  for(let i=0;i<count;i++){
+    const s = document.createElement("div");
+    s.className = "spark";
+    s.style.left = x + "px";
+    s.style.top  = y + "px";
+    s.style.setProperty("--dx", (Math.random()*80 - 40).toFixed(0) + "px");
+    s.style.setProperty("--dy", (-20 - Math.random()*70).toFixed(0) + "px");
+    s.style.animationDelay = (Math.random()*70).toFixed(0) + "ms";
+    const size = (3 + Math.random()*3).toFixed(0) + "px";
+    s.style.width = size;
+    s.style.height = size;
+
+    sparksLayer.appendChild(s);
+    s.addEventListener("animationend", () => s.remove(), { once:true });
+  }
+}
+
+function crackNo(){
+  if(cracked) return;
+  cracked = true;
+
+  const r = noBtn.getBoundingClientRect();
+  spawnSparksAt(r.left + r.width/2, r.top + r.height/2);
+
+  noBtn.classList.add("crack");
+  noBtn.style.pointerEvents = "none";
+  noBtn.addEventListener("animationend", () => {
+    noBtn.style.display = "none";
+  }, { once:true });
+}
+
+function maybeEnablePulse(){
+  if(yesScale >= pulseStartAt && !yesBtn.classList.contains("pulse")){
+    yesBtn.classList.add("pulse");
+    crackNo();
+  }
+}
+
+function dodgeNo(){
+  if(noBtn.style.display !== "none"){
+    const x = Math.random() * 220 - 110;
+    const y = Math.random() * 120 - 60;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  yesScale = Math.min(maxScale, yesScale + 0.055);
+  applyYesScale();
+  maybeEnablePulse();
+}
+
+// NIE ucieka na hover i na dotyk
+noBtn.addEventListener("mouseover", dodgeNo);
+noBtn.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  dodgeNo();
+}, {passive:false});
+
+// serduszka po TAK
+function spawnHeart(){
+  const h = document.createElement("div");
+  h.className = "goldHeart";
+  h.textContent = "💛";
+  h.style.left = Math.random()*100 + "vw";
+  h.style.setProperty("--drift", (Math.random()*80 - 40).toFixed(0) + "px");
+  h.style.animationDuration = (5.2 + Math.random()*4.2).toFixed(2) + "s";
+  h.style.fontSize = (14 + Math.random()*10).toFixed(0) + "px";
+  h.style.opacity = (0.55 + Math.random()*0.35).toFixed(2);
+  heartsLayer.appendChild(h);
+  h.addEventListener("animationend", ()=>h.remove(), { once:true });
+}
+function startHearts(){
+  heartsLayer.style.display = "block";
+  for(let i=0;i<10;i++) setTimeout(spawnHeart, i*120);
+  setInterval(spawnHeart, 280);
+}
+
+// płynne przejście + przyciemnienie
+function goToFinalSmooth(){
+  dim.classList.add("on");
+  setTimeout(() => dim.classList.remove("on"), 260);
+
+  intro.classList.add("out");
+
+  setTimeout(() => {
+    intro.style.display = "none";
+    final.style.display = "block";
+    requestAnimationFrame(() => final.classList.add("show"));
+    setTimeout(startHearts, 250);
+  }, 520);
+}
+yesBtn.addEventListener("click", goToFinalSmooth);
+
+// Spotify panel toggle
+spotifyToggle.addEventListener("click", () => {
+  const open = spotifyPanel.classList.toggle("open");
+  spotifyToggle.setAttribute("aria-expanded", String(open));
+  spotifyPanel.setAttribute("aria-hidden", String(!open));
+});
+</script>
+
+</body>
+</html>
