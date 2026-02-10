@@ -80,25 +80,27 @@ button {
   right: 10px;
 }
 
-#result {
-  margin-top: 20px;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-#photoBox {
-  margin-top: 25px;
+#final {
   display: none;
   animation: fadeIn 1.5s ease;
 }
 
-#photoBox img {
+#final h2 {
+  margin-top: 10px;
+  font-size: 26px;
+}
+
+#final p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+#final img {
   width: 100%;
   max-height: 52vh;
   object-fit: contain;
   border-radius: 20px;
   box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-  margin-bottom: 12px;
 }
 
 @keyframes fadeIn {
@@ -111,37 +113,42 @@ button {
 <body>
 
 <div class="card">
-  <h1>Dla Ciebie 💕</h1>
 
-  <p>
-    Od kiedy jesteś w moim życiu,<br>
-    wszystko stało się jakieś… jaśniejsze.
-  </p>
+  <!-- POCZĄTEK -->
+  <div id="intro">
+    <h1>Dla Ciebie 💕</h1>
 
-  <p>
-    Jest coś, o co chcę Cię zapytać…
-  </p>
+    <p>
+      Od kiedy jesteś w moim życiu,<br>
+      wszystko stało się jakieś… jaśniejsze.
+    </p>
 
-  <h2>Czy zostaniesz moją Walentynką? 💘</h2>
+    <p>
+      Jest coś, o co chcę Cię zapytać…
+    </p>
 
-  <div class="buttons">
-    <button id="yes">TAK 💖</button>
-    <button id="no">NIE 🙈</button>
+    <h2>Czy zostaniesz moją Walentynką? 💘</h2>
+
+    <div class="buttons">
+      <button id="yes">TAK 💖</button>
+      <button id="no">NIE 🙈</button>
+    </div>
   </div>
 
-  <div id="result"></div>
-
-  <div id="photoBox">
+  <!-- FINAŁ -->
+  <div id="final">
+    <h2>Wiedziałem… 💕</h2>
     <p>To jeden z tych momentów, do których chcę wracać… 💞</p>
     <img src="photo.jpg" alt="Nasze zdjęcie">
   </div>
+
 </div>
 
 <script>
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
-const photoBox = document.getElementById("photoBox");
-const buttons = document.querySelector(".buttons");
+const intro = document.getElementById("intro");
+const final = document.getElementById("final");
 
 noBtn.addEventListener("mouseover", () => {
   const x = Math.random() * 200 - 100;
@@ -150,9 +157,8 @@ noBtn.addEventListener("mouseover", () => {
 });
 
 yesBtn.addEventListener("click", () => {
-  buttons.style.display = "none";
-  document.getElementById("result").innerHTML = "Wiedziałem… 💕";
-  photoBox.style.display = "block";
+  intro.style.display = "none";
+  final.style.display = "block";
 });
 </script>
 
