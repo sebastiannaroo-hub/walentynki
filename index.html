@@ -61,7 +61,7 @@ body{
   z-index: 2;
 }
 
-/* płynne przejście intro -> final */
+/* płynne przejścia scen */
 .scene{
   transition: opacity 520ms ease, transform 520ms ease, filter 520ms ease;
   will-change: opacity, transform, filter;
@@ -107,7 +107,7 @@ h2{ margin-top:20px; font-weight:600; }
 /* przyciski */
 .btn{
   font-size: 18px;
-  padding: 12px 28px;
+  padding: 12px 22px;
   border-radius: 999px;
   cursor: pointer;
   border: 1px solid rgba(212,175,55,0.45);
@@ -115,6 +115,15 @@ h2{ margin-top:20px; font-weight:600; }
   user-select:none;
   will-change: transform, box-shadow, filter, opacity;
 }
+
+.btnRow{
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.btnWide{ width: 100%; justify-content: center; display: inline-flex; align-items: center; gap: 10px; }
 
 #yes{
   background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(242,211,107,0.85));
@@ -292,7 +301,6 @@ h2{ margin-top:20px; font-weight:600; }
   line-height: 1.6;
   margin-bottom: 10px;
 }
-
 .lyrics{
   margin: 0 0 12px 0;
   padding: 12px;
@@ -303,7 +311,6 @@ h2{ margin-top:20px; font-weight:600; }
   line-height: 1.65;
   white-space: pre-line;
 }
-
 .spotifyGo{
   display:inline-flex;
   align-items:center;
@@ -319,6 +326,25 @@ h2{ margin-top:20px; font-weight:600; }
   transition: transform 180ms ease, filter 180ms ease;
 }
 .spotifyGo:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+
+/* Akt 3 */
+.final3Box{
+  margin-top: 12px;
+  padding: 16px 16px;
+  border-radius: 16px;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
+  line-height: 1.75;
+}
+.final3Title{
+  font-size: 26px;
+  margin: 0 0 10px 0;
+  color: rgba(242,211,107,0.96);
+}
+.smallNote{
+  opacity: .82;
+  margin-top: 10px;
+}
 </style>
 </head>
 
@@ -329,6 +355,7 @@ h2{ margin-top:20px; font-weight:600; }
 
 <div class="card">
 
+  <!-- AKT 1 -->
   <div id="intro" class="scene">
     <h1>Dla Agaty ✨</h1>
 
@@ -351,6 +378,7 @@ h2{ margin-top:20px; font-weight:600; }
     </div>
   </div>
 
+  <!-- AKT 2 -->
   <div id="final" class="scene in" style="display:none;">
     <h2 id="finalTitle">Wiedziałem… 💕</h2>
     <div class="meta">14.02.2026</div>
@@ -370,6 +398,16 @@ h2{ margin-top:20px; font-weight:600; }
 
     <img src="photo.jpg" alt="Nasze zdjęcie">
 
+    <div class="btnRow">
+      <button id="smsBtn" class="btn btnWide" type="button" style="background: rgba(212,175,55,0.16); color: rgba(255,255,255,0.92); border-color: rgba(212,175,55,0.35);">
+        📩 Wyślij mi SMS „TAK” 💛
+      </button>
+
+      <button id="nextActBtn" class="btn btnWide" type="button" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.92); border-color: rgba(212,175,55,0.28);">
+        Dalej ✨
+      </button>
+    </div>
+
     <div class="spotifyWrap">
       <button id="spotifyToggle" class="spotifyPrimaryBtn" type="button" aria-expanded="false" aria-controls="spotifyPanel">
         🎧 Otwórz na Spotify
@@ -377,13 +415,34 @@ h2{ margin-top:20px; font-weight:600; }
 
       <div id="spotifyPanel" class="spotifyPanel" aria-hidden="true">
         <div class="spotifyLine">Ten kawałek ma lecieć w tle… dla nas 💛</div>
-
         <div class="lyrics">There now, steady love, so few come and don't go</div>
-
         <a class="spotifyGo" href="https://open.spotify.com/track/5l6hpyTGBK0LAAxgPnqTQL" target="_blank" rel="noopener noreferrer">
           Przejdź do Spotify ✨
         </a>
       </div>
+    </div>
+  </div>
+
+  <!-- AKT 3 -->
+  <div id="final3" class="scene in" style="display:none;">
+    <h2 class="final3Title">Ostatni mały detal… ✨</h2>
+
+    <div class="final3Box">
+      <div>💛 Jeśli dotarłaś aż tutaj, to znaczy, że to “my” dalej wygrywa.</div>
+      <div style="margin-top:10px;">🖤 Chcę, żeby ten wieczór był spokojny, ciepły i nasz — bez pośpiechu.</div>
+      <div style="margin-top:10px;">✨ A reszta? Zrobi się sama, kiedy będziemy obok.</div>
+
+      <div class="smallNote">PS. Jeśli masz ochotę — odpisz mi w SMS, jaką godzinę wybierasz i czy “winko” jest na tak 😄🍷</div>
+    </div>
+
+    <div class="btnRow" style="margin-top:14px;">
+      <button id="smsBtn2" class="btn btnWide" type="button" style="background: linear-gradient(135deg, rgba(212,175,55,0.92), rgba(242,211,107,0.82)); color:#0b0b0b; font-weight:800;">
+        📩 Napisz do mnie teraz 💛
+      </button>
+
+      <button id="backToPlan" class="btn btnWide" type="button" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.92); border-color: rgba(212,175,55,0.28);">
+        Wróć do planu ↩️
+      </button>
     </div>
   </div>
 
@@ -392,8 +451,11 @@ h2{ margin-top:20px; font-weight:600; }
 <script>
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
+
 const intro = document.getElementById("intro");
 const final = document.getElementById("final");
+const final3 = document.getElementById("final3");
+
 const heartsLayer = document.getElementById("heartsLayer");
 const sparksLayer = document.getElementById("sparksLayer");
 const dim = document.getElementById("dim");
@@ -401,7 +463,25 @@ const dim = document.getElementById("dim");
 const spotifyToggle = document.getElementById("spotifyToggle");
 const spotifyPanel = document.getElementById("spotifyPanel");
 
-// rosnące TAK + pulsowanie
+const nextActBtn = document.getElementById("nextActBtn");
+const backToPlan = document.getElementById("backToPlan");
+
+const smsBtn = document.getElementById("smsBtn");
+const smsBtn2 = document.getElementById("smsBtn2");
+
+const SMS_NUMBER = "731132304";
+const SMS_TEXT = "TAK 💛\nWalentynki 14.02.2026 — jestem na TAK.\nGodzina: ____\nWinko: (tak/nie) 🍷";
+
+function openSMS(){
+  const msg = encodeURIComponent(SMS_TEXT);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const link = isIOS
+    ? `sms:${SMS_NUMBER}&body=${msg}`
+    : `sms:${SMS_NUMBER}?body=${msg}`;
+  window.location.href = link;
+}
+
+/* rosnące TAK + pulsowanie */
 let yesScale = 1;
 const maxScale = 1.38;
 const pulseStartAt = 1.18;
@@ -467,14 +547,14 @@ function dodgeNo(){
   maybeEnablePulse();
 }
 
-// NIE ucieka na hover i na dotyk
+/* NIE ucieka na hover i na dotyk */
 noBtn.addEventListener("mouseover", dodgeNo);
 noBtn.addEventListener("touchstart", (e) => {
   e.preventDefault();
   dodgeNo();
 }, {passive:false });
 
-// serduszka po TAK
+/* serduszka po TAK */
 function spawnHeart(){
   const h = document.createElement("div");
   h.className = "goldHeart";
@@ -493,7 +573,21 @@ function startHearts(){
   setInterval(spawnHeart, 280);
 }
 
-// płynne przejście + przyciemnienie
+/* helper: przejście między scenami */
+function transition(fromEl, toEl){
+  dim.classList.add("on");
+  setTimeout(() => dim.classList.remove("on"), 260);
+
+  fromEl.classList.add("out");
+
+  setTimeout(() => {
+    fromEl.style.display = "none";
+    toEl.style.display = "block";
+    requestAnimationFrame(() => toEl.classList.add("show"));
+  }, 520);
+}
+
+/* AKT 1 -> AKT 2 */
 function goToFinalSmooth(){
   dim.classList.add("on");
   setTimeout(() => dim.classList.remove("on"), 260);
@@ -509,12 +603,22 @@ function goToFinalSmooth(){
 }
 yesBtn.addEventListener("click", goToFinalSmooth);
 
-// Spotify panel toggle
+/* AKT 2 -> AKT 3 */
+nextActBtn.addEventListener("click", () => transition(final, final3));
+
+/* AKT 3 -> AKT 2 */
+backToPlan.addEventListener("click", () => transition(final3, final));
+
+/* Spotify panel toggle */
 spotifyToggle.addEventListener("click", () => {
   const open = spotifyPanel.classList.toggle("open");
   spotifyToggle.setAttribute("aria-expanded", String(open));
   spotifyPanel.setAttribute("aria-hidden", String(!open));
 });
+
+/* SMS */
+smsBtn.addEventListener("click", openSMS);
+smsBtn2.addEventListener("click", openSMS);
 </script>
 
 </body>
