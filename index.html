@@ -1,166 +1,320 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<title>Dla Ciebie 💖</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dla Agaty ✨</title>
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
+  :root{
+    --bg1:#050505;
+    --bg2:#0b0b0b;
+    --gold:#d4af37;
+    --gold2:#f2d36b;
+    --card: rgba(255, 255, 255, 0.06);
+    --card2: rgba(255, 255, 255, 0.10);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.75);
+  }
 
-.card {
-  background: rgba(255,255,255,0.35);
-  backdrop-filter: blur(12px);
-  padding: 40px;
-  border-radius: 30px;
-  text-align: center;
-  color: #fff;
-  width: 90%;
-  max-width: 520px;
-  max-height: 90vh;
-  overflow: auto;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  animation: fadeIn 1.4s ease;
-}
+  *{ box-sizing:border-box; }
 
-h1 {
-  font-weight: 400;
-  margin-bottom: 12px;
-  font-size: 34px;
-}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 700px at 15% 10%, rgba(212,175,55,0.12), transparent 55%),
+      radial-gradient(900px 600px at 85% 20%, rgba(242,211,107,0.10), transparent 50%),
+      linear-gradient(135deg, var(--bg1), var(--bg2));
+  }
 
-p {
-  font-size: 18px;
-  line-height: 1.6;
-}
+  /* Delikatne złote “wstawki” w tle */
+  .glow-line{
+    position:fixed;
+    inset:auto -30% 12% -30%;
+    height:2px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.35), transparent);
+    filter: blur(0.4px);
+    opacity:0.7;
+    pointer-events:none;
+  }
 
-h2 {
-  font-weight: 400;
-  margin-top: 25px;
-}
+  .card{
+    width: min(560px, 92vw);
+    max-height: 90vh;
+    overflow:auto;
+    padding: 34px 28px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, var(--card), rgba(255,255,255,0.04));
+    border: 1px solid rgba(212,175,55,0.28);
+    box-shadow:
+      0 20px 50px rgba(0,0,0,0.55),
+      inset 0 0 0 1px rgba(255,255,255,0.03);
+    backdrop-filter: blur(12px);
+    position:relative;
+    animation: popIn 900ms ease;
+  }
 
-.buttons {
-  margin-top: 30px;
-  position: relative;
-  height: 70px;
-}
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.18), transparent 40%, rgba(242,211,107,0.12));
+    pointer-events:none;
+    opacity:0.6;
+    filter: blur(10px);
+    z-index:-1;
+  }
 
-button {
-  font-size: 18px;
-  padding: 12px 28px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  position: absolute;
-  transition: transform 0.3s;
-}
+  h1{
+    margin: 0 0 10px 0;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    font-size: 34px;
+    color: var(--gold2);
+    text-shadow: 0 0 18px rgba(212,175,55,0.15);
+  }
 
-#yes {
-  background: #ff4d6d;
-  color: white;
-  left: 50%;
-  transform: translateX(-50%);
-}
+  .sub{
+    margin: 0 0 18px 0;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 18px;
+  }
 
-#yes:hover {
-  transform: translateX(-50%) scale(1.1);
-}
+  h2{
+    margin: 18px 0 0 0;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--text);
+  }
 
-#no {
-  background: white;
-  color: #ff4d6d;
-  right: 10px;
-}
+  .gold{
+    color: var(--gold2);
+  }
 
-#final {
-  display: none;
-  animation: fadeIn 1.5s ease;
-}
+  .divider{
+    margin: 18px auto 0;
+    width: 120px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent);
+  }
 
-#final h2 {
-  margin-top: 10px;
-  font-size: 26px;
-}
+  .buttons{
+    margin-top: 26px;
+    position: relative;
+    height: 70px;
+  }
 
-#final p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
+  button{
+    font-size: 18px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1px solid rgba(212,175,55,0.45);
+    transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+    position: absolute;
+    user-select:none;
+  }
 
-#final img {
-  width: 100%;
-  max-height: 52vh;
-  object-fit: contain;
-  border-radius: 20px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-}
+  #yes{
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(242,211,107,0.85));
+    color: #0b0b0b;
+    box-shadow: 0 10px 24px rgba(212,175,55,0.18);
+  }
+  #yes:hover{
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 14px 28px rgba(212,175,55,0.26);
+  }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
+  #no{
+    right: 10px;
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    border-color: rgba(255,255,255,0.18);
+  }
+
+  /* Finał */
+  #final{
+    display:none;
+    animation: fadeIn 900ms ease;
+    margin-top: 4px;
+  }
+
+  #finalTitle{
+    margin-top: 10px;
+    font-size: 28px;
+    color: var(--gold2);
+  }
+
+  .meta{
+    margin: 8px 0 14px;
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+  }
+
+  .plan{
+    margin: 12px 0 18px;
+    padding: 14px 14px;
+    border-radius: 16px;
+    background: rgba(212,175,55,0.08);
+    border: 1px solid rgba(212,175,55,0.22);
+    color: rgba(255,255,255,0.88);
+    line-height: 1.65;
+  }
+  .plan b{ color: var(--gold2); font-weight: 600; }
+
+  #final img{
+    width: 100%;
+    max-height: 52vh;
+    object-fit: contain; /* zdjęcie zawsze w całości */
+    border-radius: 18px;
+    border: 1px solid rgba(212,175,55,0.22);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+  }
+
+  /* Złote serduszka-bąbelki (startują dopiero po TAK) */
+  #heartsLayer{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    display:none;
+  }
+
+  .goldHeart{
+    position: absolute;
+    bottom: -40px;
+    font-size: 18px;
+    color: rgba(212,175,55,0.85);
+    text-shadow: 0 0 14px rgba(212,175,55,0.25);
+    animation: floatUp linear forwards;
+    will-change: transform, opacity;
+  }
+
+  @keyframes floatUp{
+    0%   { transform: translateY(0) translateX(0) scale(0.9); opacity: 0; }
+    10%  { opacity: 0.9; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateY(-110vh) translateX(var(--drift)) scale(1.25); opacity: 0; }
+  }
+
+  @keyframes popIn{
+    from { opacity:0; transform: translateY(10px) scale(0.98); }
+    to   { opacity:1; transform: translateY(0) scale(1); }
+  }
+  @keyframes fadeIn{
+    from { opacity:0; transform: translateY(6px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
 </style>
 </head>
 
 <body>
+  <div class="glow-line"></div>
+  <div id="heartsLayer"></div>
 
-<div class="card">
+  <div class="card">
+    <!-- INTRO -->
+    <div id="intro">
+      <h1>Dla <span class="gold">Agaty</span> ✨</h1>
+      <p class="sub">
+        Od kiedy jesteś w moim życiu, wszystko stało się jakieś… jaśniejsze.<br>
+        Jest coś, o co chcę Cię zapytać…
+      </p>
 
-  <!-- POCZĄTEK -->
-  <div id="intro">
-    <h1>Dla Ciebie 💕</h1>
+      <div class="divider"></div>
 
-    <p>
-      Od kiedy jesteś w moim życiu,<br>
-      wszystko stało się jakieś… jaśniejsze.
-    </p>
+      <h2>Czy zostaniesz moją Walentynką? 💘</h2>
 
-    <p>
-      Jest coś, o co chcę Cię zapytać…
-    </p>
+      <div class="buttons">
+        <button id="yes">TAK 💛</button>
+        <button id="no">NIE 🙈</button>
+      </div>
+    </div>
 
-    <h2>Czy zostaniesz moją Walentynką? 💘</h2>
+    <!-- FINAL -->
+    <div id="final">
+      <h2 id="finalTitle">Wiedziałem… 💕</h2>
+      <div class="meta">14.02.2026</div>
 
-    <div class="buttons">
-      <button id="yes">TAK 💖</button>
-      <button id="no">NIE 🙈</button>
+      <div class="plan">
+        <b>Plan na nasz wieczór:</b><br>
+        Prywatna domowa sala kinowa 🎬 + wspólne robienie sushi/pizzy 🍣🍕<br>
+        Potem czas na mały podarunek 🎁 i po prostu świetny czas razem ✨
+      </div>
+
+      <div class="sub" style="margin-top:0; color: rgba(255,255,255,0.82);">
+        To jeden z tych momentów, do których chcę wracać… 💞
+      </div>
+
+      <img src="photo.jpg" alt="Nasze zdjęcie">
     </div>
   </div>
 
-  <!-- FINAŁ -->
-  <div id="final">
-    <h2>Wiedziałem… 💕</h2>
-    <p>To jeden z tych momentów, do których chcę wracać… 💞</p>
-    <img src="photo.jpg" alt="Nasze zdjęcie">
-  </div>
-
-</div>
-
 <script>
-const yesBtn = document.getElementById("yes");
-const noBtn = document.getElementById("no");
-const intro = document.getElementById("intro");
-const final = document.getElementById("final");
+  const yesBtn = document.getElementById("yes");
+  const noBtn = document.getElementById("no");
+  const intro = document.getElementById("intro");
+  const final = document.getElementById("final");
+  const heartsLayer = document.getElementById("heartsLayer");
 
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 120 - 60;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-});
+  // Uciekające NIE
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * 220 - 110;
+    const y = Math.random() * 120 - 60;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  });
 
-yesBtn.addEventListener("click", () => {
-  intro.style.display = "none";
-  final.style.display = "block";
-});
+  // Złote “bąbelkujące” serduszka po kliknięciu TAK
+  let heartsInterval = null;
+
+  function spawnHeart(){
+    const heart = document.createElement("div");
+    heart.className = "goldHeart";
+    heart.textContent = "💛";
+
+    const left = Math.random() * 100; // vw
+    const drift = (Math.random() * 80 - 40).toFixed(0) + "px";
+    const size = (14 + Math.random() * 10).toFixed(0) + "px";
+    const duration = (5.5 + Math.random() * 4.5).toFixed(2) + "s";
+    const opacity = (0.55 + Math.random() * 0.35).toFixed(2);
+
+    heart.style.left = left + "vw";
+    heart.style.setProperty("--drift", drift);
+    heart.style.fontSize = size;
+    heart.style.opacity = opacity;
+    heart.style.animationDuration = duration;
+
+    heartsLayer.appendChild(heart);
+
+    heart.addEventListener("animationend", () => {
+      heart.remove();
+    });
+  }
+
+  function startHearts(){
+    heartsLayer.style.display = "block";
+    // kilka serc na start
+    for(let i=0;i<10;i++) setTimeout(spawnHeart, i*120);
+    heartsInterval = setInterval(spawnHeart, 260); // delikatne, nie za gęste
+  }
+
+  yesBtn.addEventListener("click", () => {
+    intro.style.display = "none";
+    final.style.display = "block";
+    startHearts();
+  });
 </script>
-
 </body>
 </html>
