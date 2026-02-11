@@ -261,23 +261,62 @@ h2{ margin-top:20px; font-weight:600; }
 }
 .meta{ margin: 6px 0 14px; opacity:0.8; }
 
+/* ✅ poprawiony wygląd zaproszenia */
 .mysteryBox{
   margin: 10px 0 16px;
-  padding: 16px 16px;
-  border-radius: 16px;
-  background: rgba(212,175,55,0.06);
-  border: 1px solid rgba(212,175,55,0.18);
+  padding: 18px 18px;
+  border-radius: 18px;
+  background: radial-gradient(900px 300px at 20% 0%, rgba(212,175,55,0.10), transparent 55%),
+              rgba(212,175,55,0.05);
+  border: 1px solid rgba(212,175,55,0.20);
   line-height: 1.75;
-  color: rgba(255,255,255,0.86);
+  color: rgba(255,255,255,0.88);
 }
-.mysteryBox strong{
-  color: rgba(242,211,107,0.92);
+.mysteryBox .lead{
+  margin: 0 0 12px 0;
+  color: rgba(255,255,255,0.90);
+}
+.mysteryBox .accent{
+  color: rgba(242,211,107,0.95);
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+.mysteryList{
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  display: grid;
+  gap: 8px;
+}
+.mysteryList li{
+  display:flex;
+  gap: 10px;
+  align-items:flex-start;
+}
+.mysteryList .dot{
+  margin-top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(242,211,107,0.75);
+  box-shadow: 0 0 16px rgba(212,175,55,0.18);
+  flex: 0 0 auto;
 }
 .smallHint{
-  margin-top: 12px;
-  padding-top: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
   border-top: 1px dashed rgba(242,211,107,0.18);
-  opacity: 0.92;
+  opacity: 0.95;
+}
+.smallHint .q{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.smallHint .finalLine{
+  color: rgba(242,211,107,0.92);
+  font-weight: 900;
 }
 
 /* Zdjęcie */
@@ -521,16 +560,24 @@ h2{ margin-top:20px; font-weight:600; }
     <h2 id="finalTitle">Wiedziałem… 💕</h2>
     <div class="meta">14.02.2026</div>
 
+    <!-- ✅ NOWA, BARDZIEJ ESTETYCZNA WERSJA TEKSTU -->
     <div class="mysteryBox">
-      <strong>Zaproszenie</strong> do prywatnej domowej sali kinowej pełnej magicznego klimatu… ✨<br><br>
+      <p class="lead">
+        <span class="accent">Zaproszenie</span> do prywatnej domowej sali kinowej,
+        pełnej magicznego klimatu… ✨
+      </p>
 
-      Tego dnia przewiduję czas na mały podarunek 🎁, romantyczny seans 🎬, posiłek 🍽️,
-      wino 🍷 (nie pamiętam czy lubisz, więc spokojnie możemy to ustalić),
-      oraz Mszę za cudownego człowieka ⛪💛
+      <ul class="mysteryList">
+        <li><span class="dot"></span><span>Mały podarunek 🎁</span></li>
+        <li><span class="dot"></span><span>Romantyczny seans 🎬</span></li>
+        <li><span class="dot"></span><span>Posiłek 🍽️</span></li>
+        <li><span class="dot"></span><span>Wino 🍷 <span style="opacity:.85;">(nie pamiętam czy lubisz — spokojnie ustalimy)</span></span></li>
+        <li><span class="dot"></span><span>Msza za cudownego człowieka ⛪💛</span></li>
+      </ul>
 
       <div class="smallHint">
-        Czy mam więcej kart w zanadrzu? 😏<br>
-        <strong>Nie mogę więcej zdradzić.</strong>
+        <div class="q">Czy mam więcej kart w zanadrzu? 😏</div>
+        <div class="finalLine">Nie mogę więcej zdradzić.</div>
       </div>
     </div>
 
@@ -647,15 +694,9 @@ h2{ margin-top:20px; font-weight:600; }
 </div>
 
 <script>
-/* =========================
-   USTAWIENIA
-========================= */
 const SMS_NUMBER = "731132304";
 
-/* =========================
-   ELEMENTY
-========================= */
-const card = document.getElementById("card"); // ✅ scroll kontenera
+const card = document.getElementById("card");
 
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
@@ -680,16 +721,13 @@ const titleAgata = document.getElementById("titleAgata");
 const cowModal = document.getElementById("cowModal");
 const cowCloseBtn = document.getElementById("cowCloseBtn");
 
-/* ✅ Muzyka */
+/* Muzyka */
 const bgm = document.getElementById("bgm");
-
-// Akt 2
 const musicToggle = document.getElementById("musicToggle");
 const musicDot = document.getElementById("musicDot");
 const musicLabel = document.getElementById("musicLabel");
 const musicMini = document.getElementById("musicMini");
 
-// Akt 3
 const musicToggle2 = document.getElementById("musicToggle2");
 const musicDot2 = document.getElementById("musicDot2");
 const musicLabel2 = document.getElementById("musicLabel2");
@@ -697,16 +735,12 @@ const musicLabel2 = document.getElementById("musicLabel2");
 let musicOn = false;
 let fadeRAF = null;
 
-/* ✅ przewijanie karty na górę (zawsze gdy zmieniamy akt) */
 function scrollCardTop(){
   card.scrollTo({ top: 0, behavior: "instant" });
-  // fallback dla przeglądarek bez "instant"
   card.scrollTop = 0;
 }
 
-/* =========================
-   WYBORY DO SMS
-========================= */
+/* chips */
 function setupChips(groupEl){
   const chips = [...groupEl.querySelectorAll(".chip")];
   chips.forEach(ch => {
@@ -740,33 +774,24 @@ function buildSMSText(){
 }
 
 function openSMS(){
-  const text = buildSMSText();
-  const msg = encodeURIComponent(text);
+  const msg = encodeURIComponent(buildSMSText());
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const link = isIOS
-    ? `sms:${SMS_NUMBER}&body=${msg}`
-    : `sms:${SMS_NUMBER}?body=${msg}`;
+  const link = isIOS ? `sms:${SMS_NUMBER}&body=${msg}` : `sms:${SMS_NUMBER}?body=${msg}`;
   window.location.href = link;
 }
 
-/* =========================
-   MUZYKA: ON/OFF + FADE
-========================= */
+/* muzyka */
 function setMusicUI(on){
   musicOn = on;
-
-  if(musicDot) musicDot.classList.toggle("on", on);
-  if(musicLabel) musicLabel.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
-
-  if(musicDot2) musicDot2.classList.toggle("on", on);
-  if(musicLabel2) musicLabel2.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
+  musicDot.classList.toggle("on", on);
+  musicLabel.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
+  musicDot2.classList.toggle("on", on);
+  musicLabel2.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
 }
-
 function fadeTo(target, ms=700){
   if(fadeRAF) cancelAnimationFrame(fadeRAF);
   const start = bgm.volume;
   const t0 = performance.now();
-
   function step(now){
     const p = Math.min(1, (now - t0) / ms);
     bgm.volume = start + (target - start) * p;
@@ -774,48 +799,39 @@ function fadeTo(target, ms=700){
   }
   fadeRAF = requestAnimationFrame(step);
 }
-
 async function startMusic(){
   try{
     bgm.volume = 0.02;
     await bgm.play();
     setMusicUI(true);
-
-    if(musicMini) musicMini.textContent = "Muzyka gra… 💛";
-
+    musicMini.textContent = "Muzyka gra… 💛";
     fadeTo(0.18, 900);
     return true;
   }catch(e){
     setMusicUI(false);
-    if(musicMini) musicMini.textContent = "Jeśli nie gra — kliknij ON (czasem przeglądarka blokuje).";
+    musicMini.textContent = "Jeśli nie gra — kliknij ON (czasem przeglądarka blokuje).";
     return false;
   }
 }
-
 function stopMusic(){
   fadeTo(0.0, 550);
   setTimeout(() => bgm.pause(), 560);
   setMusicUI(false);
-
-  if(musicMini) musicMini.textContent = "Muzyka zatrzymana.";
+  musicMini.textContent = "Muzyka zatrzymana.";
 }
-
 async function toggleMusic(){
   if(!musicOn) await startMusic();
   else stopMusic();
 }
-
 musicToggle.addEventListener("click", toggleMusic);
 musicToggle2.addEventListener("click", toggleMusic);
 
 bgm.addEventListener("error", () => {
   setMusicUI(false);
-  if(musicMini) musicMini.textContent = "Błąd audio. Upewnij się, że plik to prawdziwy MP3.";
+  musicMini.textContent = "Błąd audio. Upewnij się, że plik to prawdziwy MP3.";
 });
 
-/* =========================
-   TAK/NIE – rośnie/pulsuje, NIE ucieka i pęka
-========================= */
+/* TAK/NIE */
 let yesScale = 1;
 const maxScale = 1.38;
 const pulseStartAt = 1.18;
@@ -842,7 +858,6 @@ function spawnSparksAt(x, y){
     const size = (3 + Math.random()*3).toFixed(0) + "px";
     s.style.width = size;
     s.style.height = size;
-
     sparksLayer.appendChild(s);
     s.addEventListener("animationend", () => s.remove(), { once:true });
   }
@@ -875,19 +890,14 @@ function dodgeNo(){
     const y = Math.random() * 120 - 60;
     noBtn.style.transform = `translate(${x}px, ${y}px)`;
   }
-
   yesScale = Math.min(maxScale, yesScale + 0.055);
   applyYesScale();
   maybeEnablePulse();
 }
-
 noBtn.addEventListener("mouseover", dodgeNo);
-noBtn.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  dodgeNo();
-}, {passive:false });
+noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); dodgeNo(); }, {passive:false });
 
-/* serduszka po TAK */
+/* serduszka */
 function spawnHeart(){
   const h = document.createElement("div");
   h.className = "goldHeart";
@@ -906,9 +916,7 @@ function startHearts(){
   setInterval(spawnHeart, 280);
 }
 
-/* =========================
-   PRZEJŚCIA
-========================= */
+/* przejścia */
 function transition(fromEl, toEl){
   toEl.classList.remove("out");
   toEl.classList.add("in");
@@ -924,7 +932,6 @@ function transition(fromEl, toEl){
     fromEl.style.display = "none";
     fromEl.classList.remove("out");
 
-    // ✅ zanim pokażemy nowy akt — przewiń na górę
     scrollCardTop();
 
     toEl.style.display = "block";
@@ -932,7 +939,7 @@ function transition(fromEl, toEl){
   }, 520);
 }
 
-/* AKT 1 -> AKT 2 */
+/* akt1 -> akt2 */
 function stopLoveTexts(){
   if(window.__loveTimer){
     clearInterval(window.__loveTimer);
@@ -953,7 +960,6 @@ async function goToFinalSmooth(){
     intro.style.display = "none";
     intro.classList.remove("out");
 
-    // ✅ zanim pokażemy akt 2 — przewiń na górę
     scrollCardTop();
 
     final.style.display = "block";
@@ -961,24 +967,20 @@ async function goToFinalSmooth(){
 
     setTimeout(startHearts, 250);
 
-    // ✅ AUTOMATYCZNIE WŁĄCZ MUZYKĘ PRZY WEJŚCIU DO AKTU 2
     if(!musicOn) await startMusic();
   }, 520);
 }
 yesBtn.addEventListener("click", goToFinalSmooth);
 
-/* AKT 2 -> AKT 3 */
+/* akt2 -> akt3 / back */
 nextActBtn.addEventListener("click", () => transition(final, final3));
-/* AKT 3 -> AKT 2 */
 backToPlan.addEventListener("click", () => transition(final3, final));
 
-/* SMS */
+/* sms */
 smsBtn.addEventListener("click", openSMS);
 smsBtn2.addEventListener("click", openSMS);
 
-/* =========================
-   ✅ LATAJĄCE NAPISY W TLE (AKT 1)
-========================= */
+/* love texts */
 const LOVE_PHRASES = [
   "kocham cię 💛",
   "mój skarb ✨",
@@ -989,67 +991,37 @@ const LOVE_PHRASES = [
   "Agol 💛",
   "na zawsze i jeszcze dalej ✨"
 ];
-
 function spawnLoveText(){
   if(intro.style.display === "none") return;
-
   const t = document.createElement("div");
   t.className = "loveText";
   t.textContent = LOVE_PHRASES[Math.floor(Math.random()*LOVE_PHRASES.length)];
-
-  const top = Math.random()*78 + 8;
-  t.style.top = top + "vh";
+  t.style.top = (Math.random()*78 + 8) + "vh";
   t.style.setProperty("--dy", (Math.random()*80 - 40).toFixed(0) + "px");
-
-  const dur = 12 + Math.random()*10;
-  t.style.animationDuration = dur.toFixed(2) + "s";
-
-  const scale = 0.92 + Math.random()*0.22;
-  t.style.transform = `scale(${scale.toFixed(2)})`;
-
+  t.style.animationDuration = (12 + Math.random()*10).toFixed(2) + "s";
   loveLayer.appendChild(t);
   t.addEventListener("animationend", () => t.remove(), { once:true });
 }
 for(let i=0;i<4;i++) setTimeout(spawnLoveText, i*650);
 window.__loveTimer = setInterval(spawnLoveText, 950);
 
-/* =========================
-   ✅ EASTER EGG: 4 kliknięcia w tytuł -> krówka
-========================= */
+/* krówka */
 let titleClicks = 0;
 let titleClickTimer = null;
-
-function openCow(){
-  cowModal.classList.add("on");
-  cowModal.setAttribute("aria-hidden", "false");
-}
-function closeCow(){
-  cowModal.classList.remove("on");
-  cowModal.setAttribute("aria-hidden", "true");
-}
+function openCow(){ cowModal.classList.add("on"); cowModal.setAttribute("aria-hidden", "false"); }
+function closeCow(){ cowModal.classList.remove("on"); cowModal.setAttribute("aria-hidden", "true"); }
 
 titleAgata.addEventListener("click", () => {
   titleClicks += 1;
-
   if(titleClickTimer) clearTimeout(titleClickTimer);
   titleClickTimer = setTimeout(() => { titleClicks = 0; }, 900);
-
-  if(titleClicks >= 4){
-    titleClicks = 0;
-    openCow();
-  }
+  if(titleClicks >= 4){ titleClicks = 0; openCow(); }
 });
-
 cowCloseBtn.addEventListener("click", closeCow);
 cowModal.querySelector(".cowBackdrop").addEventListener("click", closeCow);
-document.addEventListener("keydown", (e) => {
-  if(e.key === "Escape") closeCow();
-});
+document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeCow(); });
 
-/* start UI muzyki */
 setMusicUI(false);
-
-// ✅ upewnij się, że startujemy zawsze od góry przy odświeżeniu
 scrollCardTop();
 </script>
 
