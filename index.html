@@ -360,26 +360,62 @@ h2{ margin-top:20px; font-weight:600; }
   color: rgba(255,255,255,0.96);
 }
 
-/* AKT 3 */
+/* ✅ AKT 3 – estetyka dla nowej wiadomości */
 .final3Title{
   font-size: 26px;
   margin: 0 0 10px 0;
   color: rgba(242,211,107,0.96);
 }
+
 .final3Box{
   margin-top: 12px;
   padding: 16px 16px;
   border-radius: 16px;
   background: rgba(212,175,55,0.06);
   border: 1px solid rgba(212,175,55,0.18);
-  line-height: 1.75;
-  color: rgba(255,255,255,0.88);
+  line-height: 1.8;
+  color: rgba(255,255,255,0.90);
 }
+
+/* “ksywki” jako złota wstawka */
+.nickLine{
+  margin: 10px 0 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(242,211,107,0.20);
+  color: rgba(242,211,107,0.92);
+  line-height: 1.65;
+}
+
+/* akcenty “POSTARAM / BĘDĘ” */
+.vows{
+  margin: 14px 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.18);
+  border: 1px dashed rgba(242,211,107,0.22);
+}
+.vows .strong{
+  color: rgba(242,211,107,0.95);
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+/* podpis */
 .signature{
-  margin-top: 12px;
+  margin-top: 14px;
   padding-top: 10px;
   border-top: 1px dashed rgba(242,211,107,0.18);
-  color: rgba(255,255,255,0.86);
+  color: rgba(255,255,255,0.90);
+}
+
+/* PS mniejszy */
+.ps{
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0.82;
+  color: rgba(255,255,255,0.82);
 }
 
 /* ✅ MODAL KRÓWKA */
@@ -578,17 +614,33 @@ h2{ margin-top:20px; font-weight:600; }
     <h2 class="final3Title">Zanim się spotkamy… 💛</h2>
 
     <div class="final3Box">
-      Agata…<br><br>
-      Nie chcę już wracać do wersji świata, w której jesteśmy “prawie”.<br>
-      Chcę tej, w której jesteśmy <strong>naprawdę</strong> — spokojnie, pewnie i ciepło.<br><br>
-
-      Jeśli zgodzisz się zostać moją Walentynką, to obiecuję jedno:
-      będę robił wszystko, żebyś czuła się przy mnie bezpiecznie, kochana i ważna. 🖤✨<br><br>
-
-      I że to, co w końcu zobaczysz… będzie warte czekania.
-      <div class="signature">
-        — Twój Seba 💛
+      <div class="nickLine">
+        Agol, Brzdąc, Skarb, Kochanie, Słońce, Stokrotko, Mysza, Myszko, Aguś — <strong style="color: rgba(242,211,107,0.98);">NIE AGATA</strong>…
       </div>
+
+      Miłość do Ciebie sprawia, że mogę wszystko. Czuję się jakbym nie miał ograniczeń i ta strona jest na to dowodem.<br><br>
+
+      Nie zawsze mi wszystko wychodzi — to skutek „starego mnie”, tego słabszego, którego Ty mimo wszystko wybierasz i dajesz mi szansę, by stawać się lepszym i lepszym dla Ciebie… ale i dla samego siebie.<br><br>
+
+      Za to Cię <span style="color: rgba(242,211,107,0.95); font-weight:900;">BAAAARDZO KOCHAM</span>
+      i jestem <span style="color: rgba(242,211,107,0.90); font-weight:800;">WDZIĘCZNY</span>.<br><br>
+
+      Wiem, że ten dzień może mieć różne scenariusze.
+
+      <div class="vows">
+        Tego dnia <span class="strong">POSTARAM</span> się, bo Cię bardzo kocham.<br>
+        Tego dnia <span class="strong">POSTARAM</span> się zapewnić radość.<br>
+        Tego dnia <span class="strong">POSTARAM</span> się utrzymać Twój cudowny uśmiech jak najdłużej.<br>
+        Tego dnia postaram się <span class="strong">BYĆ</span> Twoim domem.<br>
+        Tego dnia postaram się <span class="strong">BYĆ</span> Twoim bezpieczeństwem.<br>
+        Tego dnia postaram się <span class="strong">BYĆ</span> Twoim spokojem.<br><br>
+        <span class="strong">Tego dnia POSTARAM SIĘ. Tego dnia BĘDĘ.</span>
+      </div>
+
+      Kocham Cię.
+
+      <div class="signature">— Twój S. 💛</div>
+      <div class="ps">PS. Będę się starał i BĘDĘ nie tylko tego dnia.</div>
     </div>
 
     <!-- ✅ muzyka też w Akcie 3 -->
@@ -754,7 +806,7 @@ async function startMusic(){
     if(musicMini0) musicMini0.textContent = "Muzyka gra… 💛";
     if(musicMini) musicMini.textContent = "Muzyka gra… 💛";
 
-    fadeTo(0.18, 900); // docelowa głośność
+    fadeTo(0.18, 900);
   }catch(e){
     setMusicUI(false);
     if(musicMini0) musicMini0.textContent = "Dotknij/kliknij ekran, aby włączyć muzykę 🎵";
