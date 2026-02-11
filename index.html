@@ -471,7 +471,16 @@ h2{ margin-top:20px; font-weight:600; }
   <div id="intro" class="scene">
     <h1 id="titleAgata">Dla Agaty ✨</h1>
 
-    <p class="sub">
+    <!-- ✅ muzyka w Akcie 1 -->
+    <div class="musicCtrl">
+      <button id="musicToggle0" class="musicBtn" type="button">
+        <span id="musicDot0" class="musicDot"></span>
+        <span id="musicLabel0">Muzyka: OFF</span>
+      </button>
+      <div class="musicMini" id="musicMini0">Dotknij/kliknij ekran, aby włączyć muzykę 🎵</div>
+    </div>
+
+    <p class="sub" style="margin-top:14px;">
       Twoje obawy były słuszne. Miałaś rację…<br>
       Nie patrzę już na Ciebie tak jak kiedyś.<br><br>
 
@@ -638,14 +647,23 @@ const cowCloseBtn = document.getElementById("cowCloseBtn");
 
 /* ✅ Muzyka */
 const bgm = document.getElementById("bgm");
+
+// Akt 2
 const musicToggle = document.getElementById("musicToggle");
 const musicDot = document.getElementById("musicDot");
 const musicLabel = document.getElementById("musicLabel");
 const musicMini = document.getElementById("musicMini");
 
+// Akt 3
 const musicToggle2 = document.getElementById("musicToggle2");
 const musicDot2 = document.getElementById("musicDot2");
 const musicLabel2 = document.getElementById("musicLabel2");
+
+// ✅ Akt 1
+const musicToggle0 = document.getElementById("musicToggle0");
+const musicDot0 = document.getElementById("musicDot0");
+const musicLabel0 = document.getElementById("musicLabel0");
+const musicMini0 = document.getElementById("musicMini0");
 
 let musicOn = false;
 let fadeRAF = null;
@@ -701,9 +719,15 @@ function openSMS(){
 function setMusicUI(on){
   musicOn = on;
 
+  // Akt 1
+  if(musicDot0) musicDot0.classList.toggle("on", on);
+  if(musicLabel0) musicLabel0.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
+
+  // Akt 2
   if(musicDot) musicDot.classList.toggle("on", on);
   if(musicLabel) musicLabel.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
 
+  // Akt 3
   if(musicDot2) musicDot2.classList.toggle("on", on);
   if(musicLabel2) musicLabel2.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
 }
@@ -726,10 +750,14 @@ async function startMusic(){
     bgm.volume = 0.02;
     await bgm.play();
     setMusicUI(true);
+
+    if(musicMini0) musicMini0.textContent = "Muzyka gra… 💛";
     if(musicMini) musicMini.textContent = "Muzyka gra… 💛";
-    fadeTo(0.18, 900); // docelowa głośność (możesz zmienić np. 0.12 / 0.22)
+
+    fadeTo(0.18, 900); // docelowa głośność
   }catch(e){
     setMusicUI(false);
+    if(musicMini0) musicMini0.textContent = "Dotknij/kliknij ekran, aby włączyć muzykę 🎵";
     if(musicMini) musicMini.textContent = "Jeśli nie gra — kliknij, żeby włączyć (czasem przeglądarka blokuje).";
   }
 }
@@ -738,6 +766,8 @@ function stopMusic(){
   fadeTo(0.0, 550);
   setTimeout(() => bgm.pause(), 560);
   setMusicUI(false);
+
+  if(musicMini0) musicMini0.textContent = "Dotknij/kliknij ekran, aby włączyć muzykę 🎵";
   if(musicMini) musicMini.textContent = "Muzyka zatrzymana.";
 }
 
@@ -746,13 +776,24 @@ async function toggleMusic(){
   else stopMusic();
 }
 
+musicToggle0.addEventListener("click", toggleMusic);
 musicToggle.addEventListener("click", toggleMusic);
 musicToggle2.addEventListener("click", toggleMusic);
 
 bgm.addEventListener("error", () => {
   setMusicUI(false);
-  if(musicMini) musicMini.textContent = "Błąd audio. Upewnij się, że plik nazywa się music.mp3 i jest prawdziwym MP3.";
+  if(musicMini0) musicMini0.textContent = "Błąd audio. Upewnij się, że plik to prawdziwy MP3.";
+  if(musicMini) musicMini.textContent = "Błąd audio. Upewnij się, że plik to prawdziwy MP3.";
 });
+
+// ✅ Muzyka startuje po pierwszej interakcji gdziekolwiek (Akt 1)
+function unlockMusicOnce(){
+  if(!musicOn){
+    startMusic();
+  }
+}
+document.addEventListener("pointerdown", unlockMusicOnce, { once: true });
+document.addEventListener("keydown", unlockMusicOnce, { once: true });
 
 /* =========================
    TAK/NIE – rośnie/pulsuje, NIE ucieka i pęka
@@ -896,8 +937,8 @@ async function goToFinalSmooth(){
 
     setTimeout(startHearts, 250);
 
-    // ✅ start muzyki po kliknięciu TAK
-    await startMusic();
+    // ✅ jeśli muzyka jeszcze nie gra, odpal ją (ale nie resetuj)
+    if(!musicOn) await startMusic();
   }, 520);
 }
 yesBtn.addEventListener("click", goToFinalSmooth);
