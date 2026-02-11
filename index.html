@@ -122,8 +122,13 @@ h2{ margin-top:20px; font-weight:600; }
   flex-wrap: wrap;
   margin-top: 14px;
 }
-
-.btnWide{ width: 100%; justify-content: center; display: inline-flex; align-items: center; gap: 10px; }
+.btnWide{
+  width: 100%;
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
 
 #yes{
   background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(242,211,107,0.85));
@@ -188,53 +193,6 @@ h2{ margin-top:20px; font-weight:600; }
   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.7); }
 }
 
-/* final */
-#finalTitle{
-  font-size:28px;
-  color: var(--gold2);
-  margin-top: 0;
-}
-.meta{ margin: 6px 0 14px; opacity:0.8; }
-
-/* plan */
-.plan{
-  margin: 12px 0 18px;
-  padding: 16px 16px;
-  border-radius: 16px;
-  background: rgba(212,175,55,0.08);
-  border: 1px solid rgba(212,175,55,0.22);
-  line-height: 1.7;
-}
-.plan .title{
-  display:block;
-  font-weight: 750;
-  color: rgba(242,211,107,0.95);
-  margin-bottom: 10px;
-}
-.plan ul{ list-style:none; padding:0; margin:0; }
-.plan li{
-  display:flex; gap:10px; align-items:flex-start;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(212,175,55,0.14);
-}
-.plan li:last-child{ border-bottom:none; }
-.plan .icon{ width:26px; flex:0 0 26px; text-align:center; opacity:.95; }
-.plan .note{
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px dashed rgba(242,211,107,0.22);
-  color: rgba(255,255,255,0.86);
-}
-
-#final img{
-  width: 100%;
-  max-height: 52vh;
-  object-fit: contain;
-  border-radius: 18px;
-  border: 1px solid rgba(212,175,55,0.22);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.55);
-}
-
 /* serduszka */
 #heartsLayer{
   position: fixed;
@@ -255,6 +213,82 @@ h2{ margin-top:20px; font-weight:600; }
   0%   { transform: translateY(0) translateX(0); opacity:0; }
   10%  { opacity:0.9; }
   100% { transform: translateY(-110vh) translateX(var(--drift)); opacity:0; }
+}
+
+/* ✅ LATAJĄCE NAPISY W TLE (AKT 1) */
+#loveTextLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* pod kartą, nad tłem */
+  overflow: hidden;
+}
+.loveText{
+  position: absolute;
+  left: -25vw;
+  top: 10vh;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+
+  color: rgba(242,211,107,0.55);
+  border: 1px solid rgba(212,175,55,0.18);
+  background: rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+
+  opacity: 0;
+  filter: blur(0.6px);
+  text-shadow: 0 0 16px rgba(212,175,55,0.10);
+
+  animation: driftText linear forwards;
+  will-change: transform, opacity;
+}
+@keyframes driftText{
+  0%   { transform: translateX(-18vw) translateY(0); opacity: 0; }
+  12%  { opacity: 0.9; }
+  85%  { opacity: 0.75; }
+  100% { transform: translateX(140vw) translateY(var(--dy)); opacity: 0; }
+}
+@media (max-width: 600px){
+  .loveText{ font-size: 16px; padding: 9px 12px; }
+}
+
+/* AKT 2 – układ tajemniczego zaproszenia */
+#finalTitle{
+  font-size:28px;
+  color: var(--gold2);
+  margin-top: 0;
+}
+.meta{ margin: 6px 0 14px; opacity:0.8; }
+
+.mysteryBox{
+  margin: 10px 0 16px;
+  padding: 16px 16px;
+  border-radius: 16px;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
+  line-height: 1.75;
+  color: rgba(255,255,255,0.86);
+}
+.mysteryBox strong{
+  color: rgba(242,211,107,0.92);
+}
+.smallHint{
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(242,211,107,0.18);
+  opacity: 0.92;
+}
+
+/* Zdjęcie wspólne */
+#final img{
+  width: 100%;
+  max-height: 52vh;
+  object-fit: contain;
+  border-radius: 18px;
+  border: 1px solid rgba(212,175,55,0.22);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.55);
 }
 
 /* SPOTIFY */
@@ -291,11 +325,10 @@ h2{ margin-top:20px; font-weight:600; }
   transition: max-height 420ms ease, opacity 260ms ease, transform 260ms ease;
 }
 .spotifyPanel.open{
-  max-height: 520px;
+  max-height: 620px;
   opacity: 1;
   transform: translateY(0);
 }
-
 .spotifyLine{
   color: rgba(255,255,255,0.86);
   line-height: 1.6;
@@ -327,7 +360,47 @@ h2{ margin-top:20px; font-weight:600; }
 }
 .spotifyGo:hover{ transform: translateY(-1px); filter: brightness(1.05); }
 
-/* Akt 3 */
+/* ✅ WYBORY DO SMS */
+.pickBox{
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,175,55,0.16);
+}
+.pickTitle{
+  color: rgba(242,211,107,0.92);
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.picks{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.chip{
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 9px 12px;
+  border: 1px solid rgba(212,175,55,0.26);
+  background: rgba(0,0,0,0.20);
+  color: rgba(255,255,255,0.88);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+  user-select:none;
+}
+.chip:hover{ transform: translateY(-1px); border-color: rgba(242,211,107,0.36); }
+.chip.active{
+  background: rgba(212,175,55,0.18);
+  border-color: rgba(242,211,107,0.55);
+  color: rgba(255,255,255,0.96);
+}
+
+/* AKT 3 – uczuciowa wiadomość */
+.final3Title{
+  font-size: 26px;
+  margin: 0 0 10px 0;
+  color: rgba(242,211,107,0.96);
+}
 .final3Box{
   margin-top: 12px;
   padding: 16px 16px;
@@ -335,29 +408,102 @@ h2{ margin-top:20px; font-weight:600; }
   background: rgba(212,175,55,0.06);
   border: 1px solid rgba(212,175,55,0.18);
   line-height: 1.75;
+  color: rgba(255,255,255,0.88);
 }
-.final3Title{
-  font-size: 26px;
-  margin: 0 0 10px 0;
-  color: rgba(242,211,107,0.96);
+.signature{
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(242,211,107,0.18);
+  color: rgba(255,255,255,0.86);
 }
-.smallNote{
-  opacity: .82;
-  margin-top: 10px;
+
+/* ✅ MODAL KRÓWKA */
+#cowModal{
+  position: fixed;
+  inset: 0;
+  display:none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+#cowModal.on{ display:flex; }
+.cowBackdrop{
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.62);
+  backdrop-filter: blur(6px);
+}
+.cowCard{
+  position: relative;
+  width: min(520px, 92vw);
+  border-radius: 22px;
+  background: rgba(15,15,15,0.92);
+  border: 1px solid rgba(212,175,55,0.28);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  padding: 14px;
+  overflow:hidden;
+  transform: translateY(10px);
+  opacity: 0;
+  animation: cowIn 260ms ease forwards;
+}
+@keyframes cowIn{
+  to{ transform: translateY(0); opacity: 1; }
+}
+.cowTop{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 6px 10px;
+}
+.cowTop .t{
+  color: rgba(242,211,107,0.95);
+  font-weight: 900;
+}
+.cowClose{
+  cursor:pointer;
+  border: 1px solid rgba(212,175,55,0.30);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  border-radius: 999px;
+  padding: 8px 12px;
+}
+.cowImg{
+  width: 100%;
+  max-height: 64vh;
+  object-fit: contain;
+  border-radius: 18px;
+  border: 1px solid rgba(212,175,55,0.18);
 }
 </style>
 </head>
 
 <body>
+
+<!-- ✅ Napisy w tle (tylko Akt 1) -->
+<div id="loveTextLayer" aria-hidden="true"></div>
+
 <div id="dim"></div>
 <div id="heartsLayer"></div>
 <div id="sparksLayer"></div>
+
+<!-- ✅ Modal krówki -->
+<div id="cowModal" aria-hidden="true">
+  <div class="cowBackdrop"></div>
+  <div class="cowCard" role="dialog" aria-modal="true" aria-label="Ukryta wiadomość">
+    <div class="cowTop">
+      <div class="t">🐮 Tajna krówka długowłosa ✨</div>
+      <button class="cowClose" id="cowCloseBtn" type="button">Zamknij</button>
+    </div>
+    <img class="cowImg" src="krowka.jpg" alt="Krówka długowłosa">
+  </div>
+</div>
 
 <div class="card">
 
   <!-- AKT 1 -->
   <div id="intro" class="scene">
-    <h1>Dla Agaty ✨</h1>
+    <h1 id="titleAgata">Dla Agaty ✨</h1>
 
     <p class="sub">
       Twoje obawy były słuszne. Miałaś rację…<br>
@@ -383,24 +529,58 @@ h2{ margin-top:20px; font-weight:600; }
     <h2 id="finalTitle">Wiedziałem… 💕</h2>
     <div class="meta">14.02.2026</div>
 
-    <div class="plan">
-      <span class="title">Plan na nasz wieczór ✨</span>
-      <ul>
-        <li><span class="icon">🎬</span><span>Prywatna domowa sala kinowa — tylko my, kocyk i klimat 🖤✨</span></li>
-        <li><span class="icon">🍣🍕</span><span>Wspólne robienie sushi/pizzy — a jeśli coś nie wyjdzie, to i tak będzie co zjeść 😄💛 <span style="white-space:nowrap;">&lt;3</span></span></li>
-        <li><span class="icon">🎁</span><span>Czas na mały podarunek… i świetny czas razem przy dobrym filmie, jedzonku i może winku? 🍷😉 (do negocjacji 😄)</span></li>
-        <li><span class="icon">⛪</span><span>Oczywiście Msza też jest w planie <span style="white-space:nowrap;">&lt;3</span></span></li>
-      </ul>
-      <div class="note">🌟 Gwarantuję atmosferę i klimat, który zapamiętamy na długo.</div>
+    <div class="mysteryBox">
+      <strong>Zaproszenie</strong> do prywatnej domowej sali kinowej pełnej magicznego klimatu… ✨<br><br>
+
+      Tego dnia przewiduję czas na mały podarunek 🎁, romantyczny seans 🎬, posiłek 🍽️,
+      wino 🍷 (nie pamiętam czy lubisz, więc spokojnie możemy to ustalić),
+      oraz Mszę za cudownego człowieka ⛪💛
+
+      <div class="smallHint">
+        Czy mam więcej kart w zanadrzu? 😏<br>
+        <strong>Nie mogę więcej zdradzić.</strong>
+      </div>
     </div>
 
     <p class="sub">To jeden z tych momentów, do których chcę wracać… 💞</p>
 
     <img src="photo.jpg" alt="Nasze zdjęcie">
 
+    <!-- ✅ wybory do SMS -->
+    <div class="pickBox">
+      <div class="pickTitle">Mała decyzja przed wysłaniem SMS 😄✨</div>
+
+      <div style="margin-top:10px;">
+        <div style="opacity:.86; margin-bottom:6px;">Kto decyduje o jedzeniu? 🍽️</div>
+        <div class="picks" id="foodPicks">
+          <div class="chip active" data-value="SEBA">SEBA</div>
+          <div class="chip" data-value="AGA">AGA</div>
+          <div class="chip" data-value="MY">MY</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <div style="opacity:.86; margin-bottom:6px;">Kto decyduje o filmie? 🎬</div>
+        <div class="picks" id="moviePicks">
+          <div class="chip" data-value="SEBA">SEBA</div>
+          <div class="chip active" data-value="AGA">AGA</div>
+          <div class="chip" data-value="MY">MY</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <div style="opacity:.86; margin-bottom:6px;">Winko? 🍷</div>
+        <div class="picks" id="winePicks">
+          <div class="chip" data-value="TAK">TAK</div>
+          <div class="chip" data-value="NIE">NIE</div>
+          <div class="chip active" data-value="USTALIMY">USTALIMY</div>
+        </div>
+      </div>
+    </div>
+
     <div class="btnRow">
       <button id="smsBtn" class="btn btnWide" type="button" style="background: rgba(212,175,55,0.16); color: rgba(255,255,255,0.92); border-color: rgba(212,175,55,0.35);">
-        📩 Wyślij mi SMS „TAK” 💛
+        📩 Wyślij mi SMS (zgoda 💛)
       </button>
 
       <button id="nextActBtn" class="btn btnWide" type="button" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.92); border-color: rgba(212,175,55,0.28);">
@@ -408,6 +588,7 @@ h2{ margin-top:20px; font-weight:600; }
       </button>
     </div>
 
+    <!-- Spotify (podmienimy później link) -->
     <div class="spotifyWrap">
       <button id="spotifyToggle" class="spotifyPrimaryBtn" type="button" aria-expanded="false" aria-controls="spotifyPanel">
         🎧 Otwórz na Spotify
@@ -415,8 +596,10 @@ h2{ margin-top:20px; font-weight:600; }
 
       <div id="spotifyPanel" class="spotifyPanel" aria-hidden="true">
         <div class="spotifyLine">Ten kawałek ma lecieć w tle… dla nas 💛</div>
+
         <div class="lyrics">There now, steady love, so few come and don't go</div>
-        <a class="spotifyGo" href="https://open.spotify.com/track/5l6hpyTGBK0LAAxgPnqTQL" target="_blank" rel="noopener noreferrer">
+
+        <a class="spotifyGo" id="spotifyLink" href="https://open.spotify.com/track/5l6hpyTGBK0LAAxgPnqTQL" target="_blank" rel="noopener noreferrer">
           Przejdź do Spotify ✨
         </a>
       </div>
@@ -425,23 +608,29 @@ h2{ margin-top:20px; font-weight:600; }
 
   <!-- AKT 3 -->
   <div id="final3" class="scene in" style="display:none;">
-    <h2 class="final3Title">Ostatni mały detal… ✨</h2>
+    <h2 class="final3Title">Zanim się spotkamy… 💛</h2>
 
     <div class="final3Box">
-      <div>💛 Jeśli dotarłaś aż tutaj, to znaczy, że to “my” dalej wygrywa.</div>
-      <div style="margin-top:10px;">🖤 Chcę, żeby ten wieczór był spokojny, ciepły i nasz — bez pośpiechu.</div>
-      <div style="margin-top:10px;">✨ A reszta? Zrobi się sama, kiedy będziemy obok.</div>
+      Agata…<br><br>
+      Nie chcę już wracać do wersji świata, w której jesteśmy “prawie”.<br>
+      Chcę tej, w której jesteśmy <strong>naprawdę</strong> — spokojnie, pewnie i ciepło.<br><br>
 
-      <div class="smallNote">PS. Jeśli masz ochotę — odpisz mi w SMS, czy “winko” jest na tak 😄🍷</div>
+      Jeśli zgodzisz się zostać moją Walentynką, to obiecuję jedno:
+      będę robił wszystko, żebyś czuła się przy mnie bezpiecznie, kochana i ważna. 🖤✨<br><br>
+
+      I że to, co w końcu zobaczysz… będzie warte czekania.
+      <div class="signature">
+        — Twój Seba 💛
+      </div>
     </div>
 
     <div class="btnRow" style="margin-top:14px;">
       <button id="smsBtn2" class="btn btnWide" type="button" style="background: linear-gradient(135deg, rgba(212,175,55,0.92), rgba(242,211,107,0.82)); color:#0b0b0b; font-weight:800;">
-        📩 Napisz do mnie teraz 💛
+        📩 Wyślij SMS (zgoda) 💛
       </button>
 
       <button id="backToPlan" class="btn btnWide" type="button" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.92); border-color: rgba(212,175,55,0.28);">
-        Wróć do planu ↩️
+        Wróć ↩️
       </button>
     </div>
   </div>
@@ -449,6 +638,17 @@ h2{ margin-top:20px; font-weight:600; }
 </div>
 
 <script>
+/* =========================
+   USTAWIENIA
+========================= */
+const SMS_NUMBER = "731132304"; // Twój numer
+
+// Spotify podmienisz później w tym 1 miejscu:
+const SPOTIFY_URL = "https://open.spotify.com/track/5l6hpyTGBK0LAAxgPnqTQL";
+
+/* =========================
+   ELEMENTY
+========================= */
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
 
@@ -462,6 +662,7 @@ const dim = document.getElementById("dim");
 
 const spotifyToggle = document.getElementById("spotifyToggle");
 const spotifyPanel = document.getElementById("spotifyPanel");
+const spotifyLink = document.getElementById("spotifyLink");
 
 const nextActBtn = document.getElementById("nextActBtn");
 const backToPlan = document.getElementById("backToPlan");
@@ -469,11 +670,53 @@ const backToPlan = document.getElementById("backToPlan");
 const smsBtn = document.getElementById("smsBtn");
 const smsBtn2 = document.getElementById("smsBtn2");
 
-const SMS_NUMBER = "731132304";
-const SMS_TEXT = "TAK 💛\nWalentynki 14.02.2026 — jestem na TAK.\nWinko: (tak/nie) 🍷";
+const loveLayer = document.getElementById("loveTextLayer");
+const titleAgata = document.getElementById("titleAgata");
+
+const cowModal = document.getElementById("cowModal");
+const cowCloseBtn = document.getElementById("cowCloseBtn");
+
+/* ustaw spotify */
+spotifyLink.href = SPOTIFY_URL;
+
+/* =========================
+   WYBORY DO SMS
+========================= */
+function setupChips(groupEl){
+  const chips = [...groupEl.querySelectorAll(".chip")];
+  chips.forEach(ch => {
+    ch.addEventListener("click", () => {
+      chips.forEach(c => c.classList.remove("active"));
+      ch.classList.add("active");
+    });
+  });
+  return () => {
+    const a = groupEl.querySelector(".chip.active");
+    return a ? a.dataset.value : "";
+  };
+}
+const getFood = setupChips(document.getElementById("foodPicks"));
+const getMovie = setupChips(document.getElementById("moviePicks"));
+const getWine = setupChips(document.getElementById("winePicks"));
+
+function buildSMSText(){
+  const food = getFood();
+  const movie = getMovie();
+  const wine = getWine();
+
+  return [
+    "TAK 💛",
+    "Zgadzam się być Twoją Walentynką.",
+    "",
+    `Jedzenie decyduje: ${food}`,
+    `Film decyduje: ${movie}`,
+    `Winko: ${wine}`,
+  ].join("\n");
+}
 
 function openSMS(){
-  const msg = encodeURIComponent(SMS_TEXT);
+  const text = buildSMSText();
+  const msg = encodeURIComponent(text);
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   const link = isIOS
     ? `sms:${SMS_NUMBER}&body=${msg}`
@@ -481,7 +724,9 @@ function openSMS(){
   window.location.href = link;
 }
 
-/* rosnące TAK + pulsowanie */
+/* =========================
+   TAK/NIE – zostaje jak było
+========================= */
 let yesScale = 1;
 const maxScale = 1.38;
 const pulseStartAt = 1.18;
@@ -573,7 +818,9 @@ function startHearts(){
   setInterval(spawnHeart, 280);
 }
 
-/* ✅ POPRAWIONE przejście między scenami (resetuje .out i klikalność) */
+/* =========================
+   PRZEJŚCIA
+========================= */
 function transition(fromEl, toEl){
   toEl.classList.remove("out");
   toEl.classList.add("in");
@@ -590,14 +837,14 @@ function transition(fromEl, toEl){
     fromEl.classList.remove("out");
 
     toEl.style.display = "block";
-    requestAnimationFrame(() => {
-      toEl.classList.add("show");
-    });
+    requestAnimationFrame(() => toEl.classList.add("show"));
   }, 520);
 }
 
 /* AKT 1 -> AKT 2 */
 function goToFinalSmooth(){
+  stopLoveTexts(); // tło napisów tylko w Akcie 1
+
   final.classList.remove("out");
   final.classList.add("in");
   final.classList.remove("show");
@@ -620,7 +867,6 @@ yesBtn.addEventListener("click", goToFinalSmooth);
 
 /* AKT 2 -> AKT 3 */
 nextActBtn.addEventListener("click", () => transition(final, final3));
-
 /* AKT 3 -> AKT 2 */
 backToPlan.addEventListener("click", () => transition(final3, final));
 
@@ -634,6 +880,90 @@ spotifyToggle.addEventListener("click", () => {
 /* SMS */
 smsBtn.addEventListener("click", openSMS);
 smsBtn2.addEventListener("click", openSMS);
+
+/* =========================
+   ✅ LATAJĄCE NAPISY W TLE (AKT 1)
+========================= */
+const LOVE_PHRASES = [
+  "kocham cię 💛",
+  "mój skarb ✨",
+  "z Tobą zawsze 🖤",
+  "jesteś moim domem 🏡",
+  "tylko ty 🌙",
+  "najpiękniejsza 🫶",
+  "Agol 💛",
+  "na zawsze i jeszcze dalej ✨"
+];
+
+let loveTimer = null;
+function spawnLoveText(){
+  if(intro.style.display === "none") return; // tylko akt 1
+
+  const t = document.createElement("div");
+  t.className = "loveText";
+  t.textContent = LOVE_PHRASES[Math.floor(Math.random()*LOVE_PHRASES.length)];
+
+  const top = Math.random()*78 + 8; // 8-86vh
+  t.style.top = top + "vh";
+  t.style.setProperty("--dy", (Math.random()*80 - 40).toFixed(0) + "px");
+
+  const dur = 12 + Math.random()*10; // 12-22s
+  t.style.animationDuration = dur.toFixed(2) + "s";
+
+  const scale = 0.92 + Math.random()*0.22;
+  t.style.transform = `scale(${scale.toFixed(2)})`;
+
+  loveLayer.appendChild(t);
+  t.addEventListener("animationend", () => t.remove(), { once:true });
+}
+
+function startLoveTexts(){
+  if(loveTimer) return;
+  // pierwsze sztuki od razu
+  for(let i=0;i<4;i++) setTimeout(spawnLoveText, i*650);
+  loveTimer = setInterval(spawnLoveText, 950);
+}
+function stopLoveTexts(){
+  if(!loveTimer) return;
+  clearInterval(loveTimer);
+  loveTimer = null;
+  // sprzątamy po chwili
+  setTimeout(() => { loveLayer.innerHTML = ""; }, 400);
+}
+startLoveTexts();
+
+/* =========================
+   ✅ EASTER EGG: 4 kliknięcia w tytuł -> krówka
+========================= */
+let titleClicks = 0;
+let titleClickTimer = null;
+
+function openCow(){
+  cowModal.classList.add("on");
+  cowModal.setAttribute("aria-hidden", "false");
+}
+function closeCow(){
+  cowModal.classList.remove("on");
+  cowModal.setAttribute("aria-hidden", "true");
+}
+
+titleAgata.addEventListener("click", () => {
+  titleClicks += 1;
+
+  if(titleClickTimer) clearTimeout(titleClickTimer);
+  titleClickTimer = setTimeout(() => { titleClicks = 0; }, 900);
+
+  if(titleClicks >= 4){
+    titleClicks = 0;
+    openCow();
+  }
+});
+
+cowCloseBtn.addEventListener("click", closeCow);
+cowModal.querySelector(".cowBackdrop").addEventListener("click", closeCow);
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeCow();
+});
 </script>
 
 </body>
