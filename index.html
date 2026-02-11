@@ -360,13 +360,12 @@ h2{ margin-top:20px; font-weight:600; }
   color: rgba(255,255,255,0.96);
 }
 
-/* ✅ AKT 3 – estetyka dla nowej wiadomości */
+/* ✅ AKT 3 – estetyka */
 .final3Title{
   font-size: 26px;
   margin: 0 0 10px 0;
   color: rgba(242,211,107,0.96);
 }
-
 .final3Box{
   margin-top: 12px;
   padding: 16px 16px;
@@ -376,8 +375,6 @@ h2{ margin-top:20px; font-weight:600; }
   line-height: 1.8;
   color: rgba(255,255,255,0.90);
 }
-
-/* “ksywki” jako złota wstawka */
 .nickLine{
   margin: 10px 0 14px;
   padding: 12px 14px;
@@ -387,8 +384,6 @@ h2{ margin-top:20px; font-weight:600; }
   color: rgba(242,211,107,0.92);
   line-height: 1.65;
 }
-
-/* akcenty “POSTARAM / BĘDĘ” */
 .vows{
   margin: 14px 0;
   padding: 12px 14px;
@@ -401,16 +396,12 @@ h2{ margin-top:20px; font-weight:600; }
   font-weight: 900;
   letter-spacing: 0.3px;
 }
-
-/* podpis */
 .signature{
   margin-top: 14px;
   padding-top: 10px;
   border-top: 1px dashed rgba(242,211,107,0.18);
   color: rgba(255,255,255,0.90);
 }
-
-/* PS mniejszy */
 .ps{
   margin-top: 10px;
   font-size: 13px;
@@ -573,8 +564,8 @@ h2{ margin-top:20px; font-weight:600; }
       <div style="margin-top:10px;">
         <div style="opacity:.86; margin-bottom:6px;">Kto decyduje o jedzeniu? 🍽️</div>
         <div class="picks" id="foodPicks">
-          <div class="chip active" data-value="SEBA">SEBA</div>
-          <div class="chip" data-value="AGA">AGA</div>
+          <div class="chip active" data-value="CHŁOP">CHŁOP</div>
+          <div class="chip" data-value="BRZDĄC">BRZDĄC</div>
           <div class="chip" data-value="MY">MY</div>
         </div>
       </div>
@@ -582,8 +573,8 @@ h2{ margin-top:20px; font-weight:600; }
       <div style="margin-top:12px;">
         <div style="opacity:.86; margin-bottom:6px;">Kto decyduje o filmie? 🎬</div>
         <div class="picks" id="moviePicks">
-          <div class="chip" data-value="SEBA">SEBA</div>
-          <div class="chip active" data-value="AGA">AGA</div>
+          <div class="chip" data-value="CHŁOP">CHŁOP</div>
+          <div class="chip active" data-value="BRZDĄC">BRZDĄC</div>
           <div class="chip" data-value="MY">MY</div>
         </div>
       </div>
@@ -989,7 +980,6 @@ async function goToFinalSmooth(){
 
     setTimeout(startHearts, 250);
 
-    // ✅ jeśli muzyka jeszcze nie gra, odpal ją (ale nie resetuj)
     if(!musicOn) await startMusic();
   }, 520);
 }
