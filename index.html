@@ -220,7 +220,7 @@ h2{ margin-top:20px; font-weight:600; }
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0; /* pod kartą, nad tłem */
+  z-index: 0;
   overflow: hidden;
 }
 .loveText{
@@ -254,7 +254,7 @@ h2{ margin-top:20px; font-weight:600; }
   .loveText{ font-size: 16px; padding: 9px 12px; }
 }
 
-/* AKT 2 – układ tajemniczego zaproszenia */
+/* AKT 2 – zaproszenie tajemnicze */
 #finalTitle{
   font-size:28px;
   color: var(--gold2);
@@ -271,9 +271,7 @@ h2{ margin-top:20px; font-weight:600; }
   line-height: 1.75;
   color: rgba(255,255,255,0.86);
 }
-.mysteryBox strong{
-  color: rgba(242,211,107,0.92);
-}
+.mysteryBox strong{ color: rgba(242,211,107,0.92); }
 .smallHint{
   margin-top: 12px;
   padding-top: 10px;
@@ -281,7 +279,6 @@ h2{ margin-top:20px; font-weight:600; }
   opacity: 0.92;
 }
 
-/* Zdjęcie wspólne */
 #final img{
   width: 100%;
   max-height: 52vh;
@@ -360,7 +357,7 @@ h2{ margin-top:20px; font-weight:600; }
 }
 .spotifyGo:hover{ transform: translateY(-1px); filter: brightness(1.05); }
 
-/* ✅ WYBORY DO SMS */
+/* WYBORY DO SMS */
 .pickBox{
   margin-top: 14px;
   padding: 14px;
@@ -373,11 +370,7 @@ h2{ margin-top:20px; font-weight:600; }
   font-weight: 800;
   margin-bottom: 8px;
 }
-.picks{
-  display:flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+.picks{ display:flex; gap: 10px; flex-wrap: wrap; }
 .chip{
   cursor: pointer;
   border-radius: 999px;
@@ -417,7 +410,7 @@ h2{ margin-top:20px; font-weight:600; }
   color: rgba(255,255,255,0.86);
 }
 
-/* ✅ MODAL KRÓWKA */
+/* MODAL KRÓWKA */
 #cowModal{
   position: fixed;
   inset: 0;
@@ -475,19 +468,58 @@ h2{ margin-top:20px; font-weight:600; }
   border-radius: 18px;
   border: 1px solid rgba(212,175,55,0.18);
 }
+
+/* ✅ KONTROLKA MUZYKI */
+.musicCtrl{
+  margin-top: 12px;
+  display:flex;
+  gap: 10px;
+  align-items:center;
+  flex-wrap: wrap;
+}
+.musicBtn{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor:pointer;
+  border: 1px solid rgba(212,175,55,0.28);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.92);
+  transition: transform 180ms ease, filter 180ms ease, border-color 180ms ease;
+}
+.musicBtn:hover{ transform: translateY(-1px); border-color: rgba(242,211,107,0.40); }
+.musicDot{
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(242,211,107,0.55);
+  box-shadow: 0 0 14px rgba(212,175,55,0.25);
+}
+.musicDot.on{ background: rgba(242,211,107,0.95); }
+.musicMsg{
+  font-size: 13px;
+  opacity: .78;
+}
 </style>
 </head>
 
 <body>
 
-<!-- ✅ Napisy w tle (tylko Akt 1) -->
+<!-- napisy w tle (akt 1) -->
 <div id="loveTextLayer" aria-hidden="true"></div>
 
 <div id="dim"></div>
 <div id="heartsLayer"></div>
 <div id="sparksLayer"></div>
 
-<!-- ✅ Modal krówki -->
+<!-- audio -->
+<audio id="bgm" preload="auto" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- modal krówki -->
 <div id="cowModal" aria-hidden="true">
   <div class="cowBackdrop"></div>
   <div class="cowCard" role="dialog" aria-modal="true" aria-label="Ukryta wiadomość">
@@ -546,7 +578,16 @@ h2{ margin-top:20px; font-weight:600; }
 
     <img src="photo.jpg" alt="Nasze zdjęcie">
 
-    <!-- ✅ wybory do SMS -->
+    <!-- kontrolka muzyki -->
+    <div class="musicCtrl">
+      <button id="musicToggle" class="musicBtn" type="button">
+        <span id="musicDot" class="musicDot"></span>
+        <span id="musicLabel">Muzyka: OFF</span>
+      </button>
+      <div id="musicMsg" class="musicMsg"></div>
+    </div>
+
+    <!-- wybory do SMS -->
     <div class="pickBox">
       <div class="pickTitle">Mała decyzja przed wysłaniem SMS 😄✨</div>
 
@@ -588,7 +629,7 @@ h2{ margin-top:20px; font-weight:600; }
       </button>
     </div>
 
-    <!-- Spotify (podmienimy później link) -->
+    <!-- Spotify (podmienisz później link) -->
     <div class="spotifyWrap">
       <button id="spotifyToggle" class="spotifyPrimaryBtn" type="button" aria-expanded="false" aria-controls="spotifyPanel">
         🎧 Otwórz na Spotify
@@ -596,10 +637,8 @@ h2{ margin-top:20px; font-weight:600; }
 
       <div id="spotifyPanel" class="spotifyPanel" aria-hidden="true">
         <div class="spotifyLine">Ten kawałek ma lecieć w tle… dla nas 💛</div>
-
-        <div class="lyrics">There now, steady love, so few come and don't go</div>
-
-        <a class="spotifyGo" id="spotifyLink" href="https://open.spotify.com/track/5l6hpyTGBK0LAAxgPnqTQL" target="_blank" rel="noopener noreferrer">
+        <div class="lyrics">Podmienimy później tekst i link ✨</div>
+        <a class="spotifyGo" id="spotifyLink" href="#" target="_blank" rel="noopener noreferrer">
           Przejdź do Spotify ✨
         </a>
       </div>
@@ -624,6 +663,15 @@ h2{ margin-top:20px; font-weight:600; }
       </div>
     </div>
 
+    <!-- kontrolka muzyki też w akcie 3 -->
+    <div class="musicCtrl">
+      <button id="musicToggle2" class="musicBtn" type="button">
+        <span id="musicDot2" class="musicDot"></span>
+        <span id="musicLabel2">Muzyka: OFF</span>
+      </button>
+      <div class="musicMsg">Jeśli nie gra — kliknij, żeby włączyć.</div>
+    </div>
+
     <div class="btnRow" style="margin-top:14px;">
       <button id="smsBtn2" class="btn btnWide" type="button" style="background: linear-gradient(135deg, rgba(212,175,55,0.92), rgba(242,211,107,0.82)); color:#0b0b0b; font-weight:800;">
         📩 Wyślij SMS (zgoda) 💛
@@ -641,10 +689,8 @@ h2{ margin-top:20px; font-weight:600; }
 /* =========================
    USTAWIENIA
 ========================= */
-const SMS_NUMBER = "731132304"; // Twój numer
-
-// Spotify podmienisz później w tym 1 miejscu:
-const SPOTIFY_URL = "https://open.spotify.com/track/5l6hpyTGBK0LAAxgPnqTQL";
+const SMS_NUMBER = "731132304";
+const SPOTIFY_URL = "#"; // podmienimy później
 
 /* =========================
    ELEMENTY
@@ -676,7 +722,17 @@ const titleAgata = document.getElementById("titleAgata");
 const cowModal = document.getElementById("cowModal");
 const cowCloseBtn = document.getElementById("cowCloseBtn");
 
-/* ustaw spotify */
+/* Muzyka */
+const bgm = document.getElementById("bgm");
+const musicToggle = document.getElementById("musicToggle");
+const musicDot = document.getElementById("musicDot");
+const musicLabel = document.getElementById("musicLabel");
+const musicMsg = document.getElementById("musicMsg");
+
+const musicToggle2 = document.getElementById("musicToggle2");
+const musicDot2 = document.getElementById("musicDot2");
+const musicLabel2 = document.getElementById("musicLabel2");
+
 spotifyLink.href = SPOTIFY_URL;
 
 /* =========================
@@ -723,6 +779,77 @@ function openSMS(){
     : `sms:${SMS_NUMBER}?body=${msg}`;
   window.location.href = link;
 }
+
+/* =========================
+   MUZYKA: ON/OFF + FADE
+========================= */
+let musicOn = false;
+let fadeTimer = null;
+
+function setMusicUI(on){
+  musicOn = on;
+  if(musicDot) musicDot.classList.toggle("on", on);
+  if(musicLabel) musicLabel.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
+  if(musicDot2) musicDot2.classList.toggle("on", on);
+  if(musicLabel2) musicLabel2.textContent = on ? "Muzyka: ON" : "Muzyka: OFF";
+}
+
+function fadeTo(target, ms=700){
+  if(fadeTimer) cancelAnimationFrame(fadeTimer);
+  const start = bgm.volume;
+  const t0 = performance.now();
+
+  function step(now){
+    const p = Math.min(1, (now - t0) / ms);
+    bgm.volume = start + (target - start) * p;
+    if(p < 1) fadeTimer = requestAnimationFrame(step);
+  }
+  fadeTimer = requestAnimationFrame(step);
+}
+
+async function startMusic(){
+  // startujemy bardzo cicho i wchodzimy fade-in
+  bgm.volume = 0.02;
+  try{
+    await bgm.play();
+    setMusicUI(true);
+    musicMsg && (musicMsg.textContent = "");
+    fadeTo(0.18, 900); // docelowa głośność (możesz zmienić np. 0.12 / 0.22)
+  }catch(err){
+    setMusicUI(false);
+    if(musicMsg){
+      musicMsg.textContent = "Nie udało się odtworzyć. Jeśli plik był m4a a nazwany mp3, trzeba go przekonwertować do MP3.";
+    }
+  }
+}
+
+function stopMusic(){
+  // fade-out i pauza
+  fadeTo(0.0, 550);
+  setTimeout(() => {
+    bgm.pause();
+  }, 560);
+  setMusicUI(false);
+}
+
+async function toggleMusic(){
+  if(!musicOn){
+    await startMusic();
+  }else{
+    stopMusic();
+  }
+}
+
+musicToggle.addEventListener("click", toggleMusic);
+musicToggle2.addEventListener("click", toggleMusic);
+
+/* jeśli audio zgłosi błąd */
+bgm.addEventListener("error", () => {
+  setMusicUI(false);
+  if(musicMsg){
+    musicMsg.textContent = "Plik audio nie może zostać odtworzony. Upewnij się, że to prawdziwy MP3 (nie m4a pod nazwą mp3).";
+  }
+});
 
 /* =========================
    TAK/NIE – zostaje jak było
@@ -843,7 +970,7 @@ function transition(fromEl, toEl){
 
 /* AKT 1 -> AKT 2 */
 function goToFinalSmooth(){
-  stopLoveTexts(); // tło napisów tylko w Akcie 1
+  stopLoveTexts();
 
   final.classList.remove("out");
   final.classList.add("in");
@@ -854,13 +981,16 @@ function goToFinalSmooth(){
 
   intro.classList.add("out");
 
-  setTimeout(() => {
+  setTimeout(async () => {
     intro.style.display = "none";
     intro.classList.remove("out");
 
     final.style.display = "block";
     requestAnimationFrame(() => final.classList.add("show"));
     setTimeout(startHearts, 250);
+
+    // ✅ muzyka startuje po kliknięciu TAK (dozwolone przez przeglądarki)
+    await startMusic();
   }, 520);
 }
 yesBtn.addEventListener("click", goToFinalSmooth);
@@ -882,7 +1012,7 @@ smsBtn.addEventListener("click", openSMS);
 smsBtn2.addEventListener("click", openSMS);
 
 /* =========================
-   ✅ LATAJĄCE NAPISY W TLE (AKT 1)
+   LATAJĄCE NAPISY (AKT 1)
 ========================= */
 const LOVE_PHRASES = [
   "kocham cię 💛",
@@ -897,17 +1027,17 @@ const LOVE_PHRASES = [
 
 let loveTimer = null;
 function spawnLoveText(){
-  if(intro.style.display === "none") return; // tylko akt 1
+  if(intro.style.display === "none") return;
 
   const t = document.createElement("div");
   t.className = "loveText";
   t.textContent = LOVE_PHRASES[Math.floor(Math.random()*LOVE_PHRASES.length)];
 
-  const top = Math.random()*78 + 8; // 8-86vh
+  const top = Math.random()*78 + 8;
   t.style.top = top + "vh";
   t.style.setProperty("--dy", (Math.random()*80 - 40).toFixed(0) + "px");
 
-  const dur = 12 + Math.random()*10; // 12-22s
+  const dur = 12 + Math.random()*10;
   t.style.animationDuration = dur.toFixed(2) + "s";
 
   const scale = 0.92 + Math.random()*0.22;
@@ -919,7 +1049,6 @@ function spawnLoveText(){
 
 function startLoveTexts(){
   if(loveTimer) return;
-  // pierwsze sztuki od razu
   for(let i=0;i<4;i++) setTimeout(spawnLoveText, i*650);
   loveTimer = setInterval(spawnLoveText, 950);
 }
@@ -927,13 +1056,12 @@ function stopLoveTexts(){
   if(!loveTimer) return;
   clearInterval(loveTimer);
   loveTimer = null;
-  // sprzątamy po chwili
   setTimeout(() => { loveLayer.innerHTML = ""; }, 400);
 }
 startLoveTexts();
 
 /* =========================
-   ✅ EASTER EGG: 4 kliknięcia w tytuł -> krówka
+   EASTER EGG: 4 kliknięcia -> krówka
 ========================= */
 let titleClicks = 0;
 let titleClickTimer = null;
@@ -964,6 +1092,9 @@ cowModal.querySelector(".cowBackdrop").addEventListener("click", closeCow);
 document.addEventListener("keydown", (e) => {
   if(e.key === "Escape") closeCow();
 });
+
+/* UI startowe muzyki */
+setMusicUI(false);
 </script>
 
 </body>
