@@ -491,7 +491,7 @@ h2{ margin-top:20px; font-weight:600; }
   </div>
 </div>
 
-<div class="card">
+<div class="card" id="card">
 
   <!-- AKT 1 -->
   <div id="intro" class="scene">
@@ -655,6 +655,8 @@ const SMS_NUMBER = "731132304";
 /* =========================
    ELEMENTY
 ========================= */
+const card = document.getElementById("card"); // ✅ scroll kontenera
+
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
 
@@ -694,6 +696,13 @@ const musicLabel2 = document.getElementById("musicLabel2");
 
 let musicOn = false;
 let fadeRAF = null;
+
+/* ✅ przewijanie karty na górę (zawsze gdy zmieniamy akt) */
+function scrollCardTop(){
+  card.scrollTo({ top: 0, behavior: "instant" });
+  // fallback dla przeglądarek bez "instant"
+  card.scrollTop = 0;
+}
 
 /* =========================
    WYBORY DO SMS
@@ -915,6 +924,9 @@ function transition(fromEl, toEl){
     fromEl.style.display = "none";
     fromEl.classList.remove("out");
 
+    // ✅ zanim pokażemy nowy akt — przewiń na górę
+    scrollCardTop();
+
     toEl.style.display = "block";
     requestAnimationFrame(() => toEl.classList.add("show"));
   }, 520);
@@ -940,6 +952,9 @@ async function goToFinalSmooth(){
   setTimeout(async () => {
     intro.style.display = "none";
     intro.classList.remove("out");
+
+    // ✅ zanim pokażemy akt 2 — przewiń na górę
+    scrollCardTop();
 
     final.style.display = "block";
     requestAnimationFrame(() => final.classList.add("show"));
@@ -1033,6 +1048,9 @@ document.addEventListener("keydown", (e) => {
 
 /* start UI muzyki */
 setMusicUI(false);
+
+// ✅ upewnij się, że startujemy zawsze od góry przy odświeżeniu
+scrollCardTop();
 </script>
 
 </body>
